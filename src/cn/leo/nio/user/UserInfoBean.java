@@ -73,6 +73,4 @@ public class UserInfoBean {
 		this.connectTime = connectTime;
 	}
 	
-	
-
 }

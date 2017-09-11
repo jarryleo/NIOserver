@@ -41,19 +41,20 @@ public class MsgManager {
 		while (iterator.hasNext()) {
 			SelectionKey selectionKey = iterator.next();
 			UserInfoBean user = UserManager.getUser(selectionKey);
-			if (TextUtil.isEmpty(user.getUserName()) && currentTime - user.getConnectTime() > TIME_OUT) {
-				// 超时没有登录的链接剔除
-				try {
-					selectionKey.cancel();
-					selectionKey.channel().close();
-					UserManager.removeUser(selectionKey);
-					Logger.i("断开未登录的链接---" + user.getIp());
-				} catch (IOException e) {
-				}
-			} else {
-				// 发送消息
-				sendMsg(selectionKey, msg);
-			}
+//			if (TextUtil.isEmpty(user.getUserName()) && currentTime - user.getConnectTime() > TIME_OUT) {
+//				// 超时没有登录的链接剔除
+//				try {
+//					selectionKey.cancel();
+//					selectionKey.channel().close();
+//					UserManager.removeUser(selectionKey);
+//					Logger.i("断开未登录的链接---" + user.getIp());
+//				} catch (IOException e) {
+//				}
+//			} else {
+//				// 发送消息
+//				sendMsg(selectionKey, msg);
+//			}
+			sendMsg(selectionKey, msg);
 		}
 	}
 
@@ -64,19 +65,23 @@ public class MsgManager {
 	 * @param msgJson
 	 */
 	public static void processMsg(SelectionKey key, String msgJson) {
-		JSONObject json = JSONObject.parseObject(msgJson);
-		int type = json.getInteger("type"); // 获取消息类型
-
-		switch (type) {
-		case MsgBean.TYPE_REG:
-			// 注册
-			break;
-
-		case MsgBean.TYPE_LOGIN:
-			// 登录
-			
-			break;
-		}
+		MsgBean msg = new MsgBean();
+		msg.setMsg(msgJson);
+		msg.setTime(System.currentTimeMillis());
+		sendMsg(key, msg);
+//		JSONObject json = JSONObject.parseObject(msgJson);
+//		int type = json.getInteger("type"); // 获取消息类型
+//
+//		switch (type) {
+//		case MsgBean.TYPE_REG:
+//			// 注册
+//			break;
+//
+//		case MsgBean.TYPE_LOGIN:
+//			// 登录
+//			
+//			break;
+//		}
 
 	}
 

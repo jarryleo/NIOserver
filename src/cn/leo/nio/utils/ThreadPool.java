@@ -3,6 +3,7 @@ package cn.leo.nio.utils;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -16,7 +17,7 @@ public class ThreadPool {
 	private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
 	private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
 	private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
-	private static final int KEEP_ALIVE = 1;
+	private static final int KEEP_ALIVE = 5;
 
 	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
 		// 线程安全的递加操作
@@ -30,7 +31,7 @@ public class ThreadPool {
 	/**
 	 * 超出线程池容量后的的排队队列,超出队列容量后将抛出异常
 	 */
-	private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<>(128);
+	private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<>(1024);
 	/**
 	 * An {@link Executor} that can be used to execute tasks in parallel.
 	 */
@@ -52,12 +53,19 @@ public class ThreadPool {
 			// mKeepAliveTime是线程执行完任务后，且队列中没有可以执行的任务，存活的时间，后面的参数是时间单位
 			// ThreadFactory是每次创建新的线程工厂
 
-//			THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,
-//					TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
+			THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE*10, MAXIMUM_POOL_SIZE*10, KEEP_ALIVE,
+					TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory,new RejectedExecutionHandler() {
+						
+						@Override
+						public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+							Logger.i("队列已满，抛弃新任务！");
+							
+						}
+					});
 			// 下面是cache类型
-			 THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0,
-			 Integer.MAX_VALUE, 1L, TimeUnit.SECONDS,
-			 new SynchronousQueue<Runnable>());
+//			 THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0,
+//			 Integer.MAX_VALUE, 1L, TimeUnit.SECONDS,
+//			 new SynchronousQueue<Runnable>());
 		}
 		THREAD_POOL_EXECUTOR.execute(run);
 	}
