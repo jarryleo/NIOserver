@@ -1,6 +1,9 @@
 package cn.leo.nio.db;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import cn.leo.nio.message.RegBean;
 
 public class Mydao {
 	// 修改密码
@@ -32,9 +35,12 @@ public class Mydao {
 		}
 	}
 
+	public static int insert(RegBean reg) {
+		return insert(reg.getUsername(), reg.getPassword(), reg.getName(), reg.getAge(), reg.getSex());
+	}
+
 	// 添加记录
-	public static int insert(String username, String password, String name,
-			int age, String sex) { // 插入
+	public static int insert(String username, String password, String name, int age, String sex) { // 插入
 		int result = -1;
 		MysqlHelper mh = new MysqlHelper();
 		try {

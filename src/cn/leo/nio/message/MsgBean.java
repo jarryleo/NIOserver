@@ -1,7 +1,5 @@
 package cn.leo.nio.message;
 
-import cn.leo.nio.user.UserInfoBean;
-
 public class MsgBean {
 	public static final int TYPE_SYS = 0; // 系统消息
 	public static final int TYPE_PUB = 1; // 群聊消息
@@ -12,8 +10,6 @@ public class MsgBean {
 	private long time; // 消息时间
 	private int type; // 消息类型
 	private long area; // 房间号 如果有群或者房间的话
-	private UserInfoBean from; // 发送方
-	private UserInfoBean target;// 接受方
 
 	public String getMsg() {
 		return msg;
@@ -47,20 +43,5 @@ public class MsgBean {
 		this.area = area;
 	}
 
-	public UserInfoBean getFrom() {
-		return from;
-	}
-
-	public void setFrom(UserInfoBean from) {
-		this.from = from;
-	}
-
-	public UserInfoBean getTarget() {
-		return target;
-	}
-
-	public void setTarget(UserInfoBean target) {
-		this.target = target;
-	}
 
 }

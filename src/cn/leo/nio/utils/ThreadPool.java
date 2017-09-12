@@ -62,7 +62,7 @@ public class ThreadPool {
 							
 						}
 					});
-			// 下面是cache类型
+			// 下面是cache类型 ，会无限开启线程，容易吃光资源
 //			 THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0,
 //			 Integer.MAX_VALUE, 1L, TimeUnit.SECONDS,
 //			 new SynchronousQueue<Runnable>());
