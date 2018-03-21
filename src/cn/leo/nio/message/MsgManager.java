@@ -16,10 +16,10 @@ import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.TextUtil;
 
 public class MsgManager {
-	private final static int TIME_OUT = 5000;// ³¬Ê±Ê±¼ä 5000 ºÁÃë
+	private final static int TIME_OUT = 5000;// è¶…æ—¶æ—¶é—´ 5000 æ¯«ç§’
 
 	/**
-	 * ·¢ËÍÏûÏ¢µ½µ¥Ò»¶ÔÏó
+	 * å‘é€æ¶ˆæ¯åˆ°å•ä¸€å¯¹è±¡
 	 * 
 	 * @param key
 	 * @param msg
@@ -30,7 +30,7 @@ public class MsgManager {
 	}
 
 	/**
-	 * Èº·¢ÏûÏ¢
+	 * ç¾¤å‘æ¶ˆæ¯
 	 * 
 	 * @param msg
 	 */
@@ -43,39 +43,39 @@ public class MsgManager {
 			SelectionKey selectionKey = iterator.next();
 			UserInfoBean user = UserManager.getUser(selectionKey);
 			if (TextUtil.isEmpty(user.getUserName()) && currentTime - user.getConnectTime() > TIME_OUT) {
-				// ³¬Ê±Ã»ÓĞµÇÂ¼µÄÁ´½ÓÌŞ³ı
+				// è¶…æ—¶æ²¡æœ‰ç™»å½•çš„é“¾æ¥å‰”é™¤
 				try {
 					selectionKey.cancel();
 					selectionKey.channel().close();
 					UserManager.removeUser(selectionKey);
-					Logger.i("¶Ï¿ªÎ´µÇÂ¼µÄÁ´½Ó---" + user.getIp());
+					Logger.i("æ–­å¼€æœªç™»å½•çš„é“¾æ¥---" + user.getIp());
 				} catch (IOException e) {
 				}
 			} else {
-				// ·¢ËÍÏûÏ¢
+				// å‘é€æ¶ˆæ¯
 				sendMsg(selectionKey, msg);
 			}
 		}
 	}
 
 	/**
-	 * ´¦Àí¿Í»§¶Ë·¢À´µÄĞÅÏ¢
+	 * å¤„ç†å®¢æˆ·ç«¯å‘æ¥çš„ä¿¡æ¯
 	 * 
 	 * @param key
 	 * @param msgJson
 	 */
 	public static void processMsg(SelectionKey key, String msgJson) {
 		JSONObject json = JSONObject.parseObject(msgJson);
-		int type = json.getInteger("type"); // »ñÈ¡ÏûÏ¢ÀàĞÍ
+		int type = json.getInteger("type"); // è·å–æ¶ˆæ¯ç±»å‹
 
 		switch (type) {
 		case MsgBean.TYPE_REG:
-			// ×¢²á
+			// æ³¨å†Œ TODO 
 			onReg(key, msgJson);
 			break;
 
 		case MsgBean.TYPE_LOGIN:
-			// µÇÂ¼
+			// ç™»å½• TODO
 
 			break;
 		}
@@ -87,9 +87,9 @@ public class MsgManager {
 		int r = Mydao.insert(reg);
 
 		if (r == -1) {
-			// ×¢²áÊ§°Ü
+			// æ³¨å†Œå¤±è´¥ TODO
 		} else {
-			// ×¢²á³É¹¦
+			// æ³¨å†ŒæˆåŠŸ TODO
 		}
 	}
 

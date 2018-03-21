@@ -4,21 +4,21 @@ import java.nio.channels.SelectionKey;
 
 public interface ServiceListener {
 	/**
-	 * ·şÎñ¶ËÓĞĞÂµÄÁ¬½Ó½éÈë
+	 * æœåŠ¡ç«¯æœ‰æ–°çš„è¿æ¥ä»‹å…¥
 	 * 
 	 * @param key
 	 */
 	void onNewConnectComing(SelectionKey key);
 
 	/**
-	 * ÓĞÁ¬½ÓÖĞ¶Ï
+	 * æœ‰è¿æ¥ä¸­æ–­
 	 * 
 	 * @param key
 	 */
 	void onConnectInterrupt(SelectionKey key);
 
 	/**
-	 * ÓĞÊı¾İµÖ´ï
+	 * æœ‰æ•°æ®æŠµè¾¾
 	 * 
 	 * @param key
 	 * @param data

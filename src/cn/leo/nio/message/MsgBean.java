@@ -1,15 +1,15 @@
 package cn.leo.nio.message;
 
 public class MsgBean {
-	public static final int TYPE_SYS = 0; // ÏµÍ³ÏûÏ¢
-	public static final int TYPE_PUB = 1; // ÈºÁÄÏûÏ¢
-	public static final int TYPE_PRI = 2; // Ë½ÁÄÏûÏ¢
-	public static final int TYPE_REG = 3; // Ë½ÁÄÏûÏ¢
-	public static final int TYPE_LOGIN = 4; // Ë½ÁÄÏûÏ¢
-	private String msg; // ÏûÏ¢ÄÚÈİ
-	private long time; // ÏûÏ¢Ê±¼ä
-	private int type; // ÏûÏ¢ÀàĞÍ
-	private long area; // ·¿¼äºÅ Èç¹ûÓĞÈº»òÕß·¿¼äµÄ»°
+	public static final int TYPE_SYS = 0; // ç³»ç»Ÿæ¶ˆæ¯
+	public static final int TYPE_PUB = 1; // ç¾¤èŠæ¶ˆæ¯
+	public static final int TYPE_PRI = 2; // ç§èŠæ¶ˆæ¯
+	public static final int TYPE_REG = 3; // ç§èŠæ¶ˆæ¯
+	public static final int TYPE_LOGIN = 4; // ç§èŠæ¶ˆæ¯
+	private String msg; // æ¶ˆæ¯å†…å®¹
+	private long time; // æ¶ˆæ¯æ—¶é—´
+	private int type; // æ¶ˆæ¯ç±»å‹
+	private long area; // æˆ¿é—´å· å¦‚æœæœ‰ç¾¤æˆ–è€…æˆ¿é—´çš„è¯
 
 	public String getMsg() {
 		return msg;

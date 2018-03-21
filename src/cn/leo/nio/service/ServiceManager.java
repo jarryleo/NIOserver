@@ -11,27 +11,27 @@ import cn.leo.nio.utils.Logger;
 public class ServiceManager implements ServiceListener {
 
 	public ServiceManager() {
-		ServiceCore.StartService(this); // Æô¶¯·şÎñÆ÷
-		MsgHeartbeat.StartHeartbeat();// ¿ªÆôĞÄÌø¼ì²â»úÖÆ
+		ServiceCore.StartService(this); // å¯åŠ¨æœåŠ¡å™¨
+		MsgHeartbeat.StartHeartbeat();// å¼€å¯å¿ƒè·³æ£€æµ‹æœºåˆ¶
 	}
 
-	// ĞÂÁ¬½Ó½ÓÈë
+	// æ–°è¿æ¥æ¥å…¥
 	@Override
 	public void onNewConnectComing(SelectionKey key) {
 		UserInfoBean user = new UserInfoBean(key);
 		UserManager.addUser(key, user);
-		Logger.d("ÓĞ¿Í»§¶Ë½ÓÈë---" + user.getIp());
+		Logger.d("æœ‰å®¢æˆ·ç«¯æ¥å…¥---" + user.getIp());
 		int size = UserManager.getmUsers().size();
 		Logger.d("clientCount:" + size);
 	}
 
-	// ÓĞÁ¬½Ó¶Ï¿ª
+	// æœ‰è¿æ¥æ–­å¼€
 	@Override
 	public void onConnectInterrupt(SelectionKey key) {
 		removeConnect(key);
 	}
 
-	// ÏûÏ¢µÖ´ï
+	// æ¶ˆæ¯æŠµè¾¾
 	@Override
 	public void onDataArrived(SelectionKey key, byte[] data) {
 		String msg = new String(data);
@@ -40,15 +40,15 @@ public class ServiceManager implements ServiceListener {
 		// Logger.d(msg + "-----" + UserManager.getUser(key).getIp());
 		// MsgBean msgBean = new MsgBean();
 		// msgBean.setMsg(msg);
-		// MsgManager.sendMsg(key, msgBean);// °Ñ¿Í·ş¶Ë·¢À´µÄÏûÏ¢»Ø·¢µ½¿Í»§¶Ë
+		// MsgManager.sendMsg(key, msgBean);// æŠŠå®¢æœç«¯å‘æ¥çš„æ¶ˆæ¯å›å‘åˆ°å®¢æˆ·ç«¯
 	}
 
-	// ÒÆ³ıÒì³£Á¬½Ó
+	// ç§»é™¤å¼‚å¸¸è¿æ¥
 	public static synchronized void removeConnect(SelectionKey key) {
 		UserInfoBean user = UserManager.getUser(key);
 		if (user == null || key == null)
 			return;
-		Logger.d("ÓĞ¿Í»§¶ËÊ§È¥Á¬½Ó---" + user.getIp());
+		Logger.d("æœ‰å®¢æˆ·ç«¯å¤±å»è¿æ¥---" + user.getIp());
 		UserManager.removeUser(key);
 		int size = UserManager.getmUsers().size();
 		Logger.d("clientCount:" + size);

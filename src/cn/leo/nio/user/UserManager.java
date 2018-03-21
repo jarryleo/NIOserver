@@ -10,7 +10,7 @@ public class UserManager {
 	private static ConcurrentHashMap<UserInfoBean, SelectionKey> mKeys = new ConcurrentHashMap<>();
 
 	/**
-	 * Ìí¼ÓÁ¬½Óµ½¹ÜÀíÀà
+	 * æ·»åŠ è¿æ¥åˆ°ç®¡ç†ç±»
 	 * 
 	 * @param user
 	 */
@@ -20,9 +20,9 @@ public class UserManager {
 	}
 
 	/**
-	 * ÒÆ³ıÁ¬½Ó
+	 * ç§»é™¤è¿æ¥
 	 * 
-	 * @param user
+	 * @param key
 	 */
 	public static void removeUser(SelectionKey key) {
 		UserInfoBean user = mUsers.get(key);
@@ -31,7 +31,7 @@ public class UserManager {
 	}
 
 	/**
-	 * »ñÈ¡ËùÓĞÔÚÏßÁ¬½Ó
+	 * è·å–æ‰€æœ‰åœ¨çº¿è¿æ¥
 	 * 
 	 * @return
 	 */
@@ -40,7 +40,7 @@ public class UserManager {
 	}
 
 	/**
-	 * ¸ù¾İÁ¬½Ó»ñÈ¡ÓÃ»§
+	 * æ ¹æ®è¿æ¥è·å–ç”¨æˆ·
 	 * 
 	 * @param key
 	 * @return
@@ -50,7 +50,7 @@ public class UserManager {
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§»ñÈ¡Á¬½Ó
+	 * æ ¹æ®ç”¨æˆ·è·å–è¿æ¥
 	 * 
 	 * @param user
 	 * @return

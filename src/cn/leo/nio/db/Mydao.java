@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import cn.leo.nio.message.RegBean;
 
 public class Mydao {
-	// ĞŞ¸ÄÃÜÂë
+	// ä¿®æ”¹å¯†ç 
 	public static void update(String name, String password) {
 		MysqlHelper mh = new MysqlHelper();
 		try {
 			mh.setPreparedStatement("update person set password = ? where name = ?");
 			mh.setString(1, password);
 			mh.setString(2, name);
-			mh.update();// Ö´ĞĞĞŞ¸Ä
+			mh.update();// æ‰§è¡Œä¿®æ”¹
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -21,13 +21,13 @@ public class Mydao {
 		}
 	}
 
-	// É¾³ıÊı¾İ¿â¼ÇÂ¼
-	public static void delete(String name) { // É¾³ı
+	// åˆ é™¤æ•°æ®åº“è®°å½•
+	public static void delete(String name) { // åˆ é™¤
 		MysqlHelper mh = new MysqlHelper();
 		try {
 			mh.setPreparedStatement("delete from person where name = ?");
 			mh.setString(1, name);
-			mh.delete();// Ö´ĞĞÉ¾³ı
+			mh.delete();// æ‰§è¡Œåˆ é™¤
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -39,8 +39,8 @@ public class Mydao {
 		return insert(reg.getUsername(), reg.getPassword(), reg.getName(), reg.getAge(), reg.getSex());
 	}
 
-	// Ìí¼Ó¼ÇÂ¼
-	public static int insert(String username, String password, String name, int age, String sex) { // ²åÈë
+	// æ·»åŠ è®°å½•
+	public static int insert(String username, String password, String name, int age, String sex) { // æ’å…¥
 		int result = -1;
 		MysqlHelper mh = new MysqlHelper();
 		try {
@@ -50,23 +50,23 @@ public class Mydao {
 			mh.setString(3, name);
 			mh.setint(4, age);
 			mh.setString(5, sex);
-			result = mh.insert();// Ö´ĞĞ²åÈë,·µ»Ø½á¹û
+			result = mh.insert();// æ‰§è¡Œæ’å…¥,è¿”å›ç»“æœ
 		} catch (SQLException e) {
-			System.out.println("×¢²áÊ§°Ü");
+			System.out.println("æ³¨å†Œå¤±è´¥");
 		} finally {
 			mh.close();
 		}
 		return result;
 	}
 
-	// »ñÈ¡µÇÂ¼½á¹û
+	// è·å–ç™»å½•ç»“æœ
 	public static String login(String user, String password) {
-		MysqlHelper mh = new MysqlHelper();// ´´½¨Êı¾İ¿â¹¤¾ßÀà
+		MysqlHelper mh = new MysqlHelper();// åˆ›å»ºæ•°æ®åº“å·¥å…·ç±»
 		try {
-			// »ñµÃÔ¤±àÒë¶ÔÏó
+			// è·å¾—é¢„ç¼–è¯‘å¯¹è±¡
 			mh.setPreparedStatement("select * from person where username = ? and password = ?");
-			mh.setString(1, user); // ÉèÖÃ²ÎÊı
-			mh.setString(2, password);// ÉèÖÃ²ÎÊı
+			mh.setString(1, user); // è®¾ç½®å‚æ•°
+			mh.setString(2, password);// è®¾ç½®å‚æ•°
 			if (mh.checkLogin()) {
 				return mh.getName();
 			} else {
@@ -75,22 +75,22 @@ public class Mydao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			mh.close(); // ÊÍ·Å×ÊÔ´
+			mh.close(); // é‡Šæ”¾èµ„æº
 		}
 		return null;
 	}
 
-	// ²éÑ¯Êı¾İ¿â
+	// æŸ¥è¯¢æ•°æ®åº“
 	public static void select() {
-		MysqlHelper mh = new MysqlHelper();// ´´½¨Êı¾İ¿â¹¤¾ßÀà
+		MysqlHelper mh = new MysqlHelper();// åˆ›å»ºæ•°æ®åº“å·¥å…·ç±»
 		try {
-			mh.setPreparedStatement("select * from person"); // »ñµÃÔ¤±àÒë¶ÔÏó
-			ResultSet rs = mh.select(); // Ö´ĞĞ²éÑ¯´úÂë
-			MysqlHelper.show(rs); // ´òÓ¡½á¹û¼¯
+			mh.setPreparedStatement("select * from person"); // è·å¾—é¢„ç¼–è¯‘å¯¹è±¡
+			ResultSet rs = mh.select(); // æ‰§è¡ŒæŸ¥è¯¢ä»£ç 
+			MysqlHelper.show(rs); // æ‰“å°ç»“æœé›†
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			mh.close(); // ÊÍ·Å×ÊÔ´
+			mh.close(); // é‡Šæ”¾èµ„æº
 		}
 	}
 }

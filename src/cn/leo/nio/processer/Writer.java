@@ -8,7 +8,7 @@ import cn.leo.nio.service.ServiceListener;
 
 public class Writer implements Runnable {
 	private static final int INT_LENGTH = 4;
-	private static final int BUFFER_CACHE = 1024;// »º³åÇø´óĞ¡
+	private static final int BUFFER_CACHE = 1024;// ç¼“å†²åŒºå¤§å°
 	private ServiceListener mListener;
 	private SelectionKey key;
 	private byte[] bytes;
@@ -26,28 +26,28 @@ public class Writer implements Runnable {
 		SocketChannel sc = (SocketChannel) key.channel();
 		ByteBuffer buffer = ByteBuffer.allocate(BUFFER_CACHE);
 		try {
-			if (sc.isConnected()) { // Èç¹ûÁ¬½Ó³É¹¦£¬ÔòÑ­»··¢ËÍÏûÏ¢
-				int length = bytes.length; // Òª·¢ËÍÊı¾İµÄ³¤¶È£¬Èç¹û³¤¶È´óÓÚ»º³åÇø¾Í·Ö¶Î·¢ËÍ
-				int start = 0; // ·Ö¶ÎÆğÊ¼µã
+			if (sc.isConnected()) { // å¦‚æœè¿æ¥æˆåŠŸï¼Œåˆ™å¾ªç¯å‘é€æ¶ˆæ¯
+				int length = bytes.length; // è¦å‘é€æ•°æ®çš„é•¿åº¦ï¼Œå¦‚æœé•¿åº¦å¤§äºç¼“å†²åŒºå°±åˆ†æ®µå‘é€
+				int start = 0; // åˆ†æ®µèµ·å§‹ç‚¹
 				while (length > 0) {
-					int part = 0; // Ã¿¶Î´óĞ¡
+					int part = 0; // æ¯æ®µå¤§å°
 					if (length >= (BUFFER_CACHE - INT_LENGTH)) {
 						part = (BUFFER_CACHE - INT_LENGTH);
 					} else {
-						part = length % (BUFFER_CACHE - INT_LENGTH); // ×îºóÒ»¶Î´óĞ¡£¬
+						part = length % (BUFFER_CACHE - INT_LENGTH); // æœ€åä¸€æ®µå¤§å°ï¼Œ
 					}
-					byte[] b = new byte[part]; // ·Ö¶ÎÊı×é
+					byte[] b = new byte[part]; // åˆ†æ®µæ•°ç»„
 
-					System.arraycopy(bytes, start, b, 0, part);// ¸´ÖÆ·Ö¶ÎÊı¾İ
-					// Ğ´ÈëÊı¾İÄÚÈİ
-					buffer.clear(); // Çå³ı»º³åÇø
+					System.arraycopy(bytes, start, b, 0, part);// å¤åˆ¶åˆ†æ®µæ•°æ®
+					// å†™å…¥æ•°æ®å†…å®¹
+					buffer.clear(); // æ¸…é™¤ç¼“å†²åŒº
 					if (start == 0) {
-						buffer.putInt(length); // µÚÒ»´Î·Ö¶ÎÍ·Ğ´Èë×ÜÊı¾İ³¤¶È
+						buffer.putInt(length); // ç¬¬ä¸€æ¬¡åˆ†æ®µå¤´å†™å…¥æ€»æ•°æ®é•¿åº¦
 					}
-					buffer.put(b);// °Ñ×Ö·û´®µÄ×Ö½ÚÊı¾İĞ´Èë»º³åÇø
-					buffer.flip();// ÖØÖÃ»º³åÇølimit
+					buffer.put(b);// æŠŠå­—ç¬¦ä¸²çš„å­—èŠ‚æ•°æ®å†™å…¥ç¼“å†²åŒº
+					buffer.flip();// é‡ç½®ç¼“å†²åŒºlimit
 					while (buffer.hasRemaining()) {
-						sc.write(buffer); // »º³åÇøÊı¾İĞ´ÈëÆµµÀ
+						sc.write(buffer); // ç¼“å†²åŒºæ•°æ®å†™å…¥é¢‘é“
 					}
 					start += part;
 					length -= part;

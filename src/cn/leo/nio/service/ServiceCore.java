@@ -18,9 +18,9 @@ import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.ThreadPool;
 
 public class ServiceCore extends Thread {
-	private static final int BUFFER_CACHE = 1024;// »º³åÇø´óĞ¡
-	private static final int TIMEOUT = 3000; // ³¬Ê±Ê±¼ä3Ãë
-	private static ServiceListener mListener; // ·şÎñÆ÷¼àÌıÆ÷
+	private static final int BUFFER_CACHE = 1024;// ç¼“å†²åŒºå¤§å°
+	private static final int TIMEOUT = 3000; // è¶…æ—¶æ—¶é—´3ç§’
+	private static ServiceListener mListener; // æœåŠ¡å™¨ç›‘å¬å™¨
 
 	public static void StartService(ServiceListener listener) {
 		mListener = listener;
@@ -29,38 +29,38 @@ public class ServiceCore extends Thread {
 
 	@Override
 	public void run() {
-		selector();// ¿ªÆô·şÎñÆ÷
+		selector();// å¼€å¯æœåŠ¡å™¨
 	}
 
 	private void selector() {
-		Selector selector = null; // nio Ñ¡ÔñÆ÷
-		ServerSocketChannel ssc = null; // nio ÆµµÀ¼àÌı
+		Selector selector = null; // nio é€‰æ‹©å™¨
+		ServerSocketChannel ssc = null; // nio é¢‘é“ç›‘å¬
 		try {
-			selector = Selector.open(); // ¿ªÆôÑ¡ÔñÆ÷
-			ssc = ServerSocketChannel.open(); // ¿ªÆôÆµµÀ
-			ssc.socket().bind(new InetSocketAddress(MysqlHelper.port)); // ÆµµÀ°ó¶¨¼àÌı¶Ë¿Ú
-			ssc.configureBlocking(false); // ÎŞ×èÈûÉèÖÃ
-			ssc.register(selector, SelectionKey.OP_ACCEPT); // ÆµµÀ×¢²áµ½Ñ¡ÔñÆ÷
-			Logger.i("·şÎñÆ÷ÒÑÆô¶¯£¡");
+			selector = Selector.open(); // å¼€å¯é€‰æ‹©å™¨
+			ssc = ServerSocketChannel.open(); // å¼€å¯é¢‘é“
+			ssc.socket().bind(new InetSocketAddress(MysqlHelper.port)); // é¢‘é“ç»‘å®šç›‘å¬ç«¯å£
+			ssc.configureBlocking(false); // æ— é˜»å¡è®¾ç½®
+			ssc.register(selector, SelectionKey.OP_ACCEPT); // é¢‘é“æ³¨å†Œåˆ°é€‰æ‹©å™¨
+			Logger.i("æœåŠ¡å™¨å·²å¯åŠ¨ï¼");
 			while (true) {
-				if (selector.select(TIMEOUT) == 0) { // µÈ´ı³¬Ê±ÇÒÃ»ÓĞÍ¨Öª£¬½øÈëÏÂÒ»¸öÑ­»·
+				if (selector.select(TIMEOUT) == 0) { // ç­‰å¾…è¶…æ—¶ä¸”æ²¡æœ‰é€šçŸ¥ï¼Œè¿›å…¥ä¸‹ä¸€ä¸ªå¾ªç¯
 					continue;
 				}
 				Set<SelectionKey> selectedKeys = selector.selectedKeys();
-				Iterator<SelectionKey> iter = selectedKeys.iterator(); // ±éÀúÆµµÀÑ¡ÔñÆ÷µÄÁ¬½ÓÍ¨Öª£¬ÓĞÁ¬½Ó¾Í»ñÈ¡
+				Iterator<SelectionKey> iter = selectedKeys.iterator(); // éå†é¢‘é“é€‰æ‹©å™¨çš„è¿æ¥é€šçŸ¥ï¼Œæœ‰è¿æ¥å°±è·å–
 				while (iter.hasNext()) {
 					SelectionKey key = iter.next();
 					try {
-						if (key.isAcceptable()) { // Èç¹ûÊÇÁ¬½ÓÀàĞÍ
+						if (key.isAcceptable()) { // å¦‚æœæ˜¯è¿æ¥ç±»å‹
 							handleAccept(key);
-						} else if (key.isReadable()) { // Èç¹ûÊÇ¶ÁÈ¡Êı¾İ
+						} else if (key.isReadable()) { // å¦‚æœæ˜¯è¯»å–æ•°æ®
 							handleRead(key);
-						} else if (key.isWritable() && key.isValid()) { // ¿ÉĞ´Êı¾İ
+						} else if (key.isWritable() && key.isValid()) { // å¯å†™æ•°æ®
 							handleWrite(key);
-						} else if (key.isConnectable()) { // ÅĞ¶ÏÊÇ·ñ¿ÉÁ¬½Ó
+						} else if (key.isConnectable()) { // åˆ¤æ–­æ˜¯å¦å¯è¿æ¥
 							Logger.i("isConnectable = true");
 						}
-						iter.remove(); // ´¦Àíºó´Ó¶ÓÁĞÒÆ³ı
+						iter.remove(); // å¤„ç†åä»é˜Ÿåˆ—ç§»é™¤
 					} catch (Exception e) {
 						key.cancel();
 					}
@@ -69,7 +69,7 @@ public class ServiceCore extends Thread {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			Logger.i("·şÎñÆ÷·¢ÉúÒì³££¬Çë¼ì²é´íÎóĞÅÏ¢£¡");
+			Logger.i("æœåŠ¡å™¨å‘ç”Ÿå¼‚å¸¸ï¼Œè¯·æ£€æŸ¥é”™è¯¯ä¿¡æ¯ï¼");
 		} finally {
 			try {
 				if (selector != null) {
@@ -85,7 +85,7 @@ public class ServiceCore extends Thread {
 	}
 
 	/**
-	 * ´¦ÀíÁ¬½ÓÊÂ¼ş
+	 * å¤„ç†è¿æ¥äº‹ä»¶
 	 * 
 	 * @param key
 	 * @throws IOException
@@ -94,8 +94,8 @@ public class ServiceCore extends Thread {
 		ServerSocketChannel ssChannel = (ServerSocketChannel) key.channel();
 		SelectionKey register = null;
 		try {
-			SocketChannel sc = ssChannel.accept(); // ½ÓÊÕÁ¬½ÓÇëÇó,²úÉúĞÂµÄÆµµÀ
-			sc.configureBlocking(false); // ÉèÖÃÎŞ×èÈû
+			SocketChannel sc = ssChannel.accept(); // æ¥æ”¶è¿æ¥è¯·æ±‚,äº§ç”Ÿæ–°çš„é¢‘é“
+			sc.configureBlocking(false); // è®¾ç½®æ— é˜»å¡
 			register = sc.register(key.selector(), SelectionKey.OP_READ, ByteBuffer.allocateDirect(BUFFER_CACHE));
 			if (mListener != null) {
 				mListener.onNewConnectComing(register);
@@ -109,7 +109,7 @@ public class ServiceCore extends Thread {
 	}
 
 	/**
-	 * ´¦Àí¶ÁÈ¡Êı¾İ
+	 * å¤„ç†è¯»å–æ•°æ®
 	 * 
 	 * @param key
 	 * @throws IOException
@@ -124,19 +124,19 @@ public class ServiceCore extends Thread {
 	}
 
 	/**
-	 * ´¦ÀíĞ´ÈëÊı¾İ
+	 * å¤„ç†å†™å…¥æ•°æ®
 	 * 
 	 * @param key
 	 * @throws IOException
 	 */
 	private void handleWrite(final SelectionKey key) {
-		ByteBuffer buf = (ByteBuffer) key.attachment(); // ÄÃÈ¡key¸½¼ÓµÄ»º³åÇø
-		SocketChannel sc = (SocketChannel) key.channel(); // ÄÃÈ¡keyµÄÆµµÀ
+		ByteBuffer buf = (ByteBuffer) key.attachment(); // æ‹¿å–keyé™„åŠ çš„ç¼“å†²åŒº
+		SocketChannel sc = (SocketChannel) key.channel(); // æ‹¿å–keyçš„é¢‘é“
 		try {
-			buf.flip();// ÖØÖÃ»º³åÇølimit
+			buf.flip();// é‡ç½®ç¼“å†²åŒºlimit
 			while (buf.hasRemaining()) {
 				if (sc.isConnected())
-					sc.write(buf); // Ğ´Èë»º³åÇøÊı¾İµ½ÆµµÀ
+					sc.write(buf); // å†™å…¥ç¼“å†²åŒºæ•°æ®åˆ°é¢‘é“
 			}
 			buf.compact(); //
 		} catch (IOException e) {
@@ -153,7 +153,7 @@ public class ServiceCore extends Thread {
 	}
 
 	/**
-	 * ·¢ËÍÊı¾İ
+	 * å‘é€æ•°æ®
 	 * 
 	 * @param bytes
 	 */

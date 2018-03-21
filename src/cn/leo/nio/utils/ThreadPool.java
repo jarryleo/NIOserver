@@ -20,7 +20,7 @@ public class ThreadPool {
 	private static final int KEEP_ALIVE = 5;
 
 	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
-		// Ïß³Ì°²È«µÄµİ¼Ó²Ù×÷
+		// çº¿ç¨‹å®‰å…¨çš„é€’åŠ æ“ä½œ
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		public Thread newThread(Runnable r) {
@@ -29,7 +29,7 @@ public class ThreadPool {
 	};
 
 	/**
-	 * ³¬³öÏß³Ì³ØÈİÁ¿ºóµÄµÄÅÅ¶Ó¶ÓÁĞ,³¬³ö¶ÓÁĞÈİÁ¿ºó½«Å×³öÒì³£
+	 * è¶…å‡ºçº¿ç¨‹æ± å®¹é‡åçš„çš„æ’é˜Ÿé˜Ÿåˆ—,è¶…å‡ºé˜Ÿåˆ—å®¹é‡åå°†æŠ›å‡ºå¼‚å¸¸
 	 */
 	private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<>(1024);
 	/**
@@ -38,31 +38,31 @@ public class ThreadPool {
 	public static ThreadPoolExecutor THREAD_POOL_EXECUTOR;
 
 	/**
-	 * Ö´ĞĞÈÎÎñ£¬µ±Ïß³Ì³Ø´¦ÓÚ¹Ø±Õ£¬½«»á´´½¨ĞÂµÄÏß³Ì³Ø
+	 * æ‰§è¡Œä»»åŠ¡ï¼Œå½“çº¿ç¨‹æ± å¤„äºå…³é—­ï¼Œå°†ä¼šåˆ›å»ºæ–°çš„çº¿ç¨‹æ± 
 	 */
 	public synchronized static void execute(Runnable run) {
 		if (run == null) {
 			return;
 		}
 		if (THREAD_POOL_EXECUTOR == null || THREAD_POOL_EXECUTOR.isShutdown()) {
-			// ²ÎÊıËµÃ÷
-			// µ±Ïß³Ì³ØÖĞµÄÏß³ÌĞ¡ÓÚmCorePoolSize£¬Ö±½Ó´´½¨ĞÂµÄÏß³Ì¼ÓÈëÏß³Ì³ØÖ´ĞĞÈÎÎñ
-			// µ±Ïß³Ì³ØÖĞµÄÏß³ÌÊıÄ¿µÈÓÚmCorePoolSize£¬½«»á°ÑÈÎÎñ·ÅÈëÈÎÎñ¶ÓÁĞsPoolWorkQueueÖĞ
-			// µ±sPoolWorkQueueÖĞµÄÈÎÎñ·ÅÂúÁË£¬½«»á´´½¨ĞÂµÄÏß³ÌÈ¥Ö´ĞĞ£¬
-			// µ«ÊÇµ±×ÜÏß³ÌÊı´óÓÚmMaximumPoolSizeÊ±£¬½«»áÅ×³öÒì³££¬½»¸øRejectedExecutionHandler´¦Àí
-			// mKeepAliveTimeÊÇÏß³ÌÖ´ĞĞÍêÈÎÎñºó£¬ÇÒ¶ÓÁĞÖĞÃ»ÓĞ¿ÉÒÔÖ´ĞĞµÄÈÎÎñ£¬´æ»îµÄÊ±¼ä£¬ºóÃæµÄ²ÎÊıÊÇÊ±¼äµ¥Î»
-			// ThreadFactoryÊÇÃ¿´Î´´½¨ĞÂµÄÏß³Ì¹¤³§
+			// å‚æ•°è¯´æ˜
+			// å½“çº¿ç¨‹æ± ä¸­çš„çº¿ç¨‹å°äºmCorePoolSizeï¼Œç›´æ¥åˆ›å»ºæ–°çš„çº¿ç¨‹åŠ å…¥çº¿ç¨‹æ± æ‰§è¡Œä»»åŠ¡
+			// å½“çº¿ç¨‹æ± ä¸­çš„çº¿ç¨‹æ•°ç›®ç­‰äºmCorePoolSizeï¼Œå°†ä¼šæŠŠä»»åŠ¡æ”¾å…¥ä»»åŠ¡é˜Ÿåˆ—sPoolWorkQueueä¸­
+			// å½“sPoolWorkQueueä¸­çš„ä»»åŠ¡æ”¾æ»¡äº†ï¼Œå°†ä¼šåˆ›å»ºæ–°çš„çº¿ç¨‹å»æ‰§è¡Œï¼Œ
+			// ä½†æ˜¯å½“æ€»çº¿ç¨‹æ•°å¤§äºmMaximumPoolSizeæ—¶ï¼Œå°†ä¼šæŠ›å‡ºå¼‚å¸¸ï¼Œäº¤ç»™RejectedExecutionHandlerå¤„ç†
+			// mKeepAliveTimeæ˜¯çº¿ç¨‹æ‰§è¡Œå®Œä»»åŠ¡åï¼Œä¸”é˜Ÿåˆ—ä¸­æ²¡æœ‰å¯ä»¥æ‰§è¡Œçš„ä»»åŠ¡ï¼Œå­˜æ´»çš„æ—¶é—´ï¼Œåé¢çš„å‚æ•°æ˜¯æ—¶é—´å•ä½
+			// ThreadFactoryæ˜¯æ¯æ¬¡åˆ›å»ºæ–°çš„çº¿ç¨‹å·¥å‚
 
 			THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE*10, MAXIMUM_POOL_SIZE*10, KEEP_ALIVE,
 					TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory,new RejectedExecutionHandler() {
 						
 						@Override
 						public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-							Logger.i("¶ÓÁĞÒÑÂú£¬Å×ÆúĞÂÈÎÎñ£¡");
+							Logger.i("é˜Ÿåˆ—å·²æ»¡ï¼ŒæŠ›å¼ƒæ–°ä»»åŠ¡ï¼");
 							
 						}
 					});
-			// ÏÂÃæÊÇcacheÀàĞÍ £¬»áÎŞÏŞ¿ªÆôÏß³Ì£¬ÈİÒ×³Ô¹â×ÊÔ´
+			// ä¸‹é¢æ˜¯cacheç±»å‹ ï¼Œä¼šæ— é™å¼€å¯çº¿ç¨‹ï¼Œå®¹æ˜“åƒå…‰èµ„æº
 //			 THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0,
 //			 Integer.MAX_VALUE, 1L, TimeUnit.SECONDS,
 //			 new SynchronousQueue<Runnable>());
@@ -71,7 +71,7 @@ public class ThreadPool {
 	}
 
 	/**
-	 * È¡ÏûÏß³Ì³ØÖĞÄ³¸ö»¹Î´Ö´ĞĞµÄÈÎÎñ
+	 * å–æ¶ˆçº¿ç¨‹æ± ä¸­æŸä¸ªè¿˜æœªæ‰§è¡Œçš„ä»»åŠ¡
 	 */
 	public synchronized static void cancel(Runnable run) {
 		if (THREAD_POOL_EXECUTOR != null
@@ -81,7 +81,7 @@ public class ThreadPool {
 	}
 
 	/**
-	 * Ïß³Ì³Ø¶ÓÁĞÖĞÊÇ·ñ°üº¬Ä³¸öÈÎÎñ£¬ÕıÔÚÖ´ĞĞµÄ²»Ëã
+	 * çº¿ç¨‹æ± é˜Ÿåˆ—ä¸­æ˜¯å¦åŒ…å«æŸä¸ªä»»åŠ¡ï¼Œæ­£åœ¨æ‰§è¡Œçš„ä¸ç®—
 	 */
 	public synchronized static boolean contains(Runnable run) {
 		if (THREAD_POOL_EXECUTOR != null
@@ -93,7 +93,7 @@ public class ThreadPool {
 	}
 
 	/**
-	 * Á¢¿Ì¹Ø±ÕÏß³Ì³Ø£¬Í£Ö¹ËùÓĞÈÎÎñ£¬°üÀ¨µÈ´ıµÄÈÎÎñ¡£
+	 * ç«‹åˆ»å…³é—­çº¿ç¨‹æ± ï¼Œåœæ­¢æ‰€æœ‰ä»»åŠ¡ï¼ŒåŒ…æ‹¬ç­‰å¾…çš„ä»»åŠ¡ã€‚
 	 */
 	public synchronized static void stop() {
 		if (THREAD_POOL_EXECUTOR != null
@@ -103,7 +103,7 @@ public class ThreadPool {
 	}
 
 	/**
-	 * ¹Ø±ÕÏß³Ì³Ø£¬²»ÔÙ½ÓÊÜĞÂµÄÈÎÎñ¡£µ«ÒÑ¾­¼ÓÈëµÄÈÎÎñ¶¼½«»á±»Ö´ĞĞÍê±Ï²Å¹Ø±Õ
+	 * å…³é—­çº¿ç¨‹æ± ï¼Œä¸å†æ¥å—æ–°çš„ä»»åŠ¡ã€‚ä½†å·²ç»åŠ å…¥çš„ä»»åŠ¡éƒ½å°†ä¼šè¢«æ‰§è¡Œå®Œæ¯•æ‰å…³é—­
 	 */
 	public synchronized static void shutdown() {
 		if (THREAD_POOL_EXECUTOR != null

@@ -23,43 +23,43 @@ public class Reader implements Runnable {
 	@Override
 	public void run() {
 		Thread.currentThread().setName("Thread-Reader");
-		SocketChannel sc = (SocketChannel) key.channel(); // »ñÈ¡keyµÄÆµµÀ
-		ByteBuffer headBuffer = ByteBuffer.allocate(INT_LENGTH); // 1¸öintÖµµÄÍ·×Ö½Ú´æ´¢Êı¾İ³¤¶È
-		ByteBuffer buf = (ByteBuffer) key.attachment(); // »ñÈ¡keyµÄ¸½¼Ó¶ÔÏó£¨ÒòÎª¸½¼ÓµÄ»º³åÇø£©
+		SocketChannel sc = (SocketChannel) key.channel(); // è·å–keyçš„é¢‘é“
+		ByteBuffer headBuffer = ByteBuffer.allocate(INT_LENGTH); // 1ä¸ªintå€¼çš„å¤´å­—èŠ‚å­˜å‚¨æ•°æ®é•¿åº¦
+		ByteBuffer buf = (ByteBuffer) key.attachment(); // è·å–keyçš„é™„åŠ å¯¹è±¡ï¼ˆå› ä¸ºé™„åŠ çš„ç¼“å†²åŒºï¼‰
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			while (sc.read(headBuffer) == INT_LENGTH) {
-				int dataLength = headBuffer.getInt(0); // ¶ÁÈ¡Êı¾İÍ·²¿4¸ö×Ö½ÚµÄintÖµ±íÊöµÄÊı¾İ³¤¶È
+				int dataLength = headBuffer.getInt(0); // è¯»å–æ•°æ®å¤´éƒ¨4ä¸ªå­—èŠ‚çš„intå€¼è¡¨è¿°çš„æ•°æ®é•¿åº¦
 				headBuffer.clear();
 				byte[] bytes;
-				int receiveLength = 0; // ÒÑ½ÓÊÜ³¤¶È
-				int bytesRead = 0;// ¶ÁÈ¡ÆµµÀÄÚµÄÊı¾İµ½»º³åÇø
+				int receiveLength = 0; // å·²æ¥å—é•¿åº¦
+				int bytesRead = 0;// è¯»å–é¢‘é“å†…çš„æ•°æ®åˆ°ç¼“å†²åŒº
 				while (receiveLength < dataLength) {
-					if (dataLength - receiveLength < buf.capacity()) { // Èç¹û×îºóÒ»²¿·Ö±È»º³åÇøĞ¡£¬Ôòµ÷Õû»º³åÇø´óĞ¡
+					if (dataLength - receiveLength < buf.capacity()) { // å¦‚æœæœ€åä¸€éƒ¨åˆ†æ¯”ç¼“å†²åŒºå°ï¼Œåˆ™è°ƒæ•´ç¼“å†²åŒºå¤§å°
 						buf.limit(dataLength - receiveLength);
 					}
-					bytesRead = sc.read(buf); // TODO ÕâÀï¿ÉÄÜÓĞBUGÒª´¦Àí
-					buf.flip();// ÖØÖÃ»º³åÇølimit
+					bytesRead = sc.read(buf); // TODO è¿™é‡Œå¯èƒ½æœ‰BUGè¦å¤„ç†
+					buf.flip();// é‡ç½®ç¼“å†²åŒºlimit
 
-					if (bytesRead < 1) { // ¶ÁÈ¡²»µ½Êı¾İÍË³ö
+					if (bytesRead < 1) { // è¯»å–ä¸åˆ°æ•°æ®é€€å‡º
 						break;
 					}
 
-					if (receiveLength + bytesRead > dataLength) { // Èç¹û½ÓÊÜµÄÊı¾İ´óÓÚÖ¸¶¨³¤¶È
-						bytes = new byte[dataLength - receiveLength]; // ÔòĞÂµÄÊı¾İÎªÊ£ÏÂÊı¾İ³¤¶È
+					if (receiveLength + bytesRead > dataLength) { // å¦‚æœæ¥å—çš„æ•°æ®å¤§äºæŒ‡å®šé•¿åº¦
+						bytes = new byte[dataLength - receiveLength]; // åˆ™æ–°çš„æ•°æ®ä¸ºå‰©ä¸‹æ•°æ®é•¿åº¦
 					} else {
-						bytes = new byte[bytesRead]; // ·ñÔòÎª¶ÁÈ¡³¤¶È
+						bytes = new byte[bytesRead]; // å¦åˆ™ä¸ºè¯»å–é•¿åº¦
 					}
 					buf.get(bytes);
 					baos.write(bytes);
-					buf.clear();// Çå¿Õ»º³åÇø
-					receiveLength += bytes.length; // ÒÑ¶ÁÈ¡µÄÊı¾İ³¤¶È
+					buf.clear();// æ¸…ç©ºç¼“å†²åŒº
+					receiveLength += bytes.length; // å·²è¯»å–çš„æ•°æ®é•¿åº¦
 				}
 				if (mListener != null) {
 					mListener.onDataArrived(key, baos.toByteArray());
 				}
 				baos.reset();
-				if (bytesRead == -1) { // ·şÎñÆ÷¶Ï¿ªÁ¬½Ó£¬¹Ø±ÕÆµµÀ
+				if (bytesRead == -1) { // æœåŠ¡å™¨æ–­å¼€è¿æ¥ï¼Œå…³é—­é¢‘é“
 					sc.close();
 				}
 			}

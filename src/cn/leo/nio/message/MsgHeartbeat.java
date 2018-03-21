@@ -1,7 +1,7 @@
 package cn.leo.nio.message;
 
 public class MsgHeartbeat extends Thread {
-	private static final int INTERVAL = 1000 * 10; // 10Ãë
+	private static final int INTERVAL = 1000 * 10; // 10ç§’
 	private static final MsgBean SYSMSG = new MsgBean();
 
 	private MsgHeartbeat() {
@@ -11,7 +11,7 @@ public class MsgHeartbeat extends Thread {
 	}
 
 	/**
-	 * Æô¶¯ĞÄÌø¼ì²â»úÖÆ
+	 * å¯åŠ¨å¿ƒè·³æ£€æµ‹æœºåˆ¶
 	 */
 	public static void StartHeartbeat() {
 		new MsgHeartbeat().start();
@@ -32,7 +32,7 @@ public class MsgHeartbeat extends Thread {
 	}
 
 	/**
-	 * ·¢ËÍĞÄÌøĞÅÏ¢
+	 * å‘é€å¿ƒè·³ä¿¡æ¯
 	 */
 	private void sendHeartMsg() {
 		MsgManager.sendMsgToAll(SYSMSG);
