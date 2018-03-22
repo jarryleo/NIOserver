@@ -47,7 +47,7 @@ public class MysqlHelper {
 		ps.setString(index, arg); // 设置参数 先重写两个常用的，需要什么就重写什么
 	}
 
-	public void setint(int index, int arg) throws SQLException {
+	public void setInt(int index, int arg) throws SQLException {
 		ps.setInt(index, arg);// 设置参数 先重写两个常用的，需要什么就重写什么
 	}
 

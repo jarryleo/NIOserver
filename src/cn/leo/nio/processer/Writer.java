@@ -58,7 +58,5 @@ public class Writer implements Runnable {
 				mListener.onConnectInterrupt(key);
 			}
 		}
-
 	}
-
 }

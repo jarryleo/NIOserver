@@ -48,7 +48,7 @@ public class Mydao {
 			mh.setString(1, username);
 			mh.setString(2, password);
 			mh.setString(3, name);
-			mh.setint(4, age);
+			mh.setInt(4, age);
 			mh.setString(5, sex);
 			result = mh.insert();// 执行插入,返回结果
 		} catch (SQLException e) {
