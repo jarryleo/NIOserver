@@ -63,7 +63,7 @@ public class MysqlHelper {
 		return ps.executeUpdate();
 	}
 
-	public ResultSet select() throws SQLException { // 查询记录
+	public ResultSet query() throws SQLException { // 查询记录
 		rs = ps.executeQuery();
 		return rs;
 	}
@@ -73,7 +73,7 @@ public class MysqlHelper {
 	}
 
 	public boolean checkLogin() throws SQLException {
-		select();
+		query();
 		return rs.next(); // 判断是否登陆成功
 	}
 

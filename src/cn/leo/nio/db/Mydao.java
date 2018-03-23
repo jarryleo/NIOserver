@@ -84,8 +84,8 @@ public class Mydao {
 	public static void select() {
 		MysqlHelper mh = new MysqlHelper();// 创建数据库工具类
 		try {
-			mh.setPreparedStatement("select * from person"); // 获得预编译对象
-			ResultSet rs = mh.select(); // 执行查询代码
+			mh.setPreparedStatement("query * from person"); // 获得预编译对象
+			ResultSet rs = mh.query(); // 执行查询代码
 			MysqlHelper.show(rs); // 打印结果集
 		} catch (SQLException e) {
 			e.printStackTrace();
