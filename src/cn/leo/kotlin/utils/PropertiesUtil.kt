@@ -24,7 +24,6 @@ object PropertiesUtil {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     /**

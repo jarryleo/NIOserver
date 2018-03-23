@@ -4,10 +4,11 @@ import cn.leo.kotlin.db.MysqlHelper
 import cn.leo.kotlin.utils.DbUtil
 
 fun main(args: Array<String>) {
-    testInsert()
+//    testInsert()
 //    testDelete()
 //    testUpdate()
 //    testQuery()
+    MysqlHelper().Update("person").set("name = ?","张三").where("name = ?","李思思").execute()
 }
 
 fun testInsert() {
