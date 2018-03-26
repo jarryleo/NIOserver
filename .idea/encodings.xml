@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/cn/leo/nio/db/Mydao.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/cn/leo/nio/message/MsgBean.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/cn/leo/nio/message/MsgHeartbeat.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/cn/leo/nio/message/MsgManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/leo/business/bean/MsgBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/leo/business/message/MsgHeartbeat.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/leo/business/message/MsgManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/cn/leo/business/user/UserManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/processer/Reader.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/processer/Writer.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/service/ServiceCore.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/service/ServiceListener.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/service/ServiceManager.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/cn/leo/nio/user/UserManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/cn/leo/nio/utils/ThreadPool.java" charset="UTF-8" />
   </component>
 </project>

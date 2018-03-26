@@ -1,4 +1,6 @@
-package cn.leo.nio.message;
+package cn.leo.business.message;
+
+import cn.leo.business.bean.MsgBean;
 
 public class MsgHeartbeat extends Thread {
 	private static final int INTERVAL = 1000 * 10; // 10秒

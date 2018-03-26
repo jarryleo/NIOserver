@@ -1,4 +1,6 @@
-package cn.leo.nio.user;
+package cn.leo.business.user;
+
+import cn.leo.business.bean.UserInfoBean;
 
 import java.nio.channels.SelectionKey;
 import java.util.Set;
@@ -35,7 +37,7 @@ public class UserManager {
 	 * 
 	 * @return
 	 */
-	public static Set<SelectionKey> getmUsers() {
+	public static Set<SelectionKey> getUsers() {
 		return mUsers.keySet();
 	}
 

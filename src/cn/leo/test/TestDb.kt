@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
 //    testDelete()
 //    testUpdate()
 //    testQuery()
-    MysqlHelper().Update("person").set("name = ?","张三").where("name = ?","李思思").execute()
+    MysqlHelper().Update("person").set("name = ?", "李四").where("age = ?", 24).execute()
 }
 
 fun testInsert() {

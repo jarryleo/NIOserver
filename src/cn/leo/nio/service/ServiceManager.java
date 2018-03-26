@@ -1,10 +1,10 @@
 package cn.leo.nio.service;
 
 import cn.leo.kotlin.utils.PropertiesUtil;
-import cn.leo.nio.message.MsgHeartbeat;
-import cn.leo.nio.message.MsgManager;
-import cn.leo.nio.user.UserInfoBean;
-import cn.leo.nio.user.UserManager;
+import cn.leo.business.message.MsgHeartbeat;
+import cn.leo.business.message.MsgManager;
+import cn.leo.business.bean.UserInfoBean;
+import cn.leo.business.user.UserManager;
 import cn.leo.nio.utils.Logger;
 
 import java.nio.channels.SelectionKey;
@@ -22,7 +22,7 @@ public class ServiceManager implements ServiceListener {
         UserInfoBean user = new UserInfoBean(key);
         UserManager.addUser(key, user);
         Logger.d("有客户端接入---" + user.getIp());
-        int size = UserManager.getmUsers().size();
+        int size = UserManager.getUsers().size();
         Logger.d("clientCount:" + size);
     }
 
@@ -51,7 +51,7 @@ public class ServiceManager implements ServiceListener {
             return;
         Logger.d("有客户端失去连接---" + user.getIp());
         UserManager.removeUser(key);
-        int size = UserManager.getmUsers().size();
+        int size = UserManager.getUsers().size();
         Logger.d("clientCount:" + size);
 
     }

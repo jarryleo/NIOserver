@@ -1,8 +1,9 @@
-package cn.leo.nio.message;
+package cn.leo.business.message;
 
+import cn.leo.business.bean.MsgBean;
 import cn.leo.nio.service.ServiceCore;
-import cn.leo.nio.user.UserInfoBean;
-import cn.leo.nio.user.UserManager;
+import cn.leo.business.bean.UserInfoBean;
+import cn.leo.business.user.UserManager;
 import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.TextUtil;
 import com.google.gson.Gson;
@@ -32,7 +33,7 @@ public class MsgManager {
      * @param msg
      */
     public static void sendMsgToAll(MsgBean msg) {
-        Set<SelectionKey> users = UserManager.getmUsers();
+        Set<SelectionKey> users = UserManager.getUsers();
 
         Iterator<SelectionKey> iterator = users.iterator();
         long currentTime = System.currentTimeMillis();
@@ -63,7 +64,10 @@ public class MsgManager {
      */
     public static void processMsg(SelectionKey key, String msgJson) {
         MsgBean msgBean = new Gson().fromJson(msgJson, MsgBean.class);
-
+        switch (msgBean.getType()) {
+            case MsgBean.TYPE_SYS:
+                break;
+        }
 
     }
 }
