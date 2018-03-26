@@ -10,8 +10,11 @@ public enum MsgCode {
     ROOM_INFO(5001),//房间信息
     ROOM_JOIN(5002),//加入房间
     ROOM_EXIT(5003),//退出房间
-    ROOM_JOIN_SUC(5100),//加入房间成功
-    ROOM_JOIN_FAI(5101),//加入房间失败
+    ROOM_CREATE(5100),//创建房间
+    ROOM_CREATE_SUC(5101),//创建房间成功
+    ROOM_CREATE_FAIL(5102),//创建房间失败
+    ROOM_JOIN_SUC(5200),//加入房间成功
+    ROOM_JOIN_FAI(5201),//加入房间失败
     GAME_START(6000),//游戏开始
     GAME_EXIT(6001),//退出游戏
     GAME_ANSWER(6003),//显示答案
