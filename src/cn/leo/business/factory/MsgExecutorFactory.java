@@ -2,7 +2,7 @@ package cn.leo.business.factory;
 
 import cn.leo.business.bean.MsgBean;
 import cn.leo.business.executor.*;
-import cn.leo.business.message.MsgType;
+import cn.leo.business.constant.MsgType;
 
 import java.nio.channels.SelectionKey;
 

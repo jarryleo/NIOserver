@@ -1,13 +1,6 @@
 package cn.leo.nio.utils;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -31,7 +24,7 @@ public class ThreadPool {
     /**
      * 超出线程池容量后的的排队队列,超出队列容量后将抛出异常
      */
-    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<>(1024);
+    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<>(1024 * CPU_COUNT);
     /**
      * An {@link Executor} that can be used to execute tasks in parallel.
      */

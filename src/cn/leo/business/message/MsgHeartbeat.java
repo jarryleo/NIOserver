@@ -1,6 +1,8 @@
 package cn.leo.business.message;
 
 import cn.leo.business.bean.MsgBean;
+import cn.leo.business.constant.MsgType;
+import cn.leo.business.constant.MsgCode;
 
 public class MsgHeartbeat extends Thread {
     private static final int INTERVAL = 1000 * 10; // 10秒
@@ -8,8 +10,8 @@ public class MsgHeartbeat extends Thread {
 
     private MsgHeartbeat() {
         super();
-        SYSMSG.setMsg("Heart");
         SYSMSG.setType(MsgType.SYS);
+        SYSMSG.setCode(MsgCode.HEART.getCode());
     }
 
     /**

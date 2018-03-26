@@ -1,4 +1,4 @@
-package cn.leo.business.message;
+package cn.leo.business.constant;
 
 public enum MsgType {
     SYS,//系统消息

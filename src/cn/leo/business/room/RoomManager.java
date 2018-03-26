@@ -2,6 +2,7 @@ package cn.leo.business.room;
 
 import cn.leo.business.bean.RoomBean;
 import cn.leo.business.bean.UserBean;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +39,10 @@ public class RoomManager {
      */
     public static void removeRoom(RoomBean room) {
         mRooms.remove(room);
+    }
+
+    public static String getRoomListJson() {
+        return new Gson().toJson(mRooms);
     }
 
 }
