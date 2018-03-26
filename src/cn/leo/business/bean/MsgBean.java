@@ -1,18 +1,12 @@
 package cn.leo.business.bean;
 
+import cn.leo.business.message.MsgType;
 import com.google.gson.Gson;
 
 public class MsgBean {
-    public static final int TYPE_SYS = 0; // 系统消息
-    public static final int TYPE_PUB = 1; // 群聊消息
-    public static final int TYPE_PRI = 2; // 私聊消息
-    public static final int TYPE_REG = 3; // 注册消息
-    public static final int TYPE_LOGIN = 4; // 登录消息
-    public static final int TYPE_PAINT = 5; // 画画消息
-    public static final int TYPE_GAME = 6; // 游戏指令，根据消息首字母判断类型
     private String msg; // 消息内容
     private long time; // 消息时间
-    private int type; // 消息类型
+    private MsgType type; // 消息类型
     private long area; // 房间号 如果有群或者房间的话
 
     public String getMsg() {
@@ -31,11 +25,11 @@ public class MsgBean {
         this.time = time;
     }
 
-    public int getType() {
+    public MsgType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(MsgType type) {
         this.type = type;
     }
 

@@ -1,6 +1,6 @@
 package cn.leo.business.user;
 
-import cn.leo.business.bean.UserInfoBean;
+import cn.leo.business.bean.UserBean;
 
 import java.nio.channels.SelectionKey;
 import java.util.Set;
@@ -8,15 +8,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class UserManager {
 
-	private static ConcurrentHashMap<SelectionKey, UserInfoBean> mUsers = new ConcurrentHashMap<>();
-	private static ConcurrentHashMap<UserInfoBean, SelectionKey> mKeys = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<SelectionKey, UserBean> mUsers = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<UserBean, SelectionKey> mKeys = new ConcurrentHashMap<>();
 
 	/**
 	 * 添加连接到管理类
 	 * 
 	 * @param user
 	 */
-	public static void addUser(SelectionKey key, UserInfoBean user) {
+	public static void addUser(SelectionKey key, UserBean user) {
 		mUsers.put(key, user);
 		mKeys.put(user, key);
 	}
@@ -27,7 +27,7 @@ public class UserManager {
 	 * @param key
 	 */
 	public static void removeUser(SelectionKey key) {
-		UserInfoBean user = mUsers.get(key);
+		UserBean user = mUsers.get(key);
 		mUsers.remove(key);
 		mKeys.remove(user);
 	}
@@ -47,7 +47,7 @@ public class UserManager {
 	 * @param key
 	 * @return
 	 */
-	public static UserInfoBean getUser(SelectionKey key) {
+	public static UserBean getUser(SelectionKey key) {
 		return mUsers.get(key);
 	}
 
@@ -57,7 +57,7 @@ public class UserManager {
 	 * @param user
 	 * @return
 	 */
-	public static SelectionKey getKey(UserInfoBean user) {
+	public static SelectionKey getKey(UserBean user) {
 		return mKeys.get(user);
 	}
 }

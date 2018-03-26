@@ -1,0 +1,130 @@
+package cn.leo.business.bean;
+
+import cn.leo.business.room.RoomManager;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class RoomBean {
+    //房间内的玩家列表
+    private List<UserBean> mUsers = Collections.synchronizedList(new ArrayList<UserBean>());
+    //房间id
+    private int mRoomId;
+    //房间正在画画的词汇
+    private String mWord;
+    //画画的词汇提示语
+    private String mWordTips;
+    //房间状态，0为未开始游戏，1-n为进行到第n轮
+    private int mRoomState;
+    //房主
+    private UserBean mRoomOwner;
+    //当前房间绘画人
+    private UserBean mRoomPainter;
+    //当前画画倒计时
+    private int mPaintCountDown;
+
+    public int getRoomId() {
+        return mRoomId;
+    }
+
+    public void setRoomId(int mRoomId) {
+        this.mRoomId = mRoomId;
+    }
+
+    public int getRoomState() {
+        return mRoomState;
+    }
+
+    public void setRoomState(int roomState) {
+        mRoomState = roomState;
+    }
+
+    public UserBean getRoomOwner() {
+        return mRoomOwner;
+    }
+
+    public void setRoomOwner(UserBean roomOwner) {
+        mRoomOwner = roomOwner;
+    }
+
+    public UserBean getRoomPainter() {
+        return mRoomPainter;
+    }
+
+    public void setRoomPainter(UserBean roomPainter) {
+        mRoomPainter = roomPainter;
+    }
+
+    public int getPaintCountDown() {
+        return mPaintCountDown;
+    }
+
+    public void setPaintCountDown(int paintCountDown) {
+        mPaintCountDown = paintCountDown;
+    }
+
+    public String getWord() {
+        return mWord;
+    }
+
+    public void setWord(String word) {
+        mWord = word;
+    }
+
+    public String getWordTips() {
+        return mWordTips;
+    }
+
+    public void setWordTips(String wordTips) {
+        mWordTips = wordTips;
+    }
+
+    //玩家进入房间
+    public void addUser(UserBean user) {
+        mUsers.add(user);
+        user.setRoom(this);
+    }
+
+    //玩家退出房间
+    public void removeUser(UserBean user) {
+        mUsers.remove(user);
+        user.setRoom(null);
+        //如果房间没人了
+        if (getUserCount() == 0) {
+            //从服务器删除房间
+            RoomManager.removeRoom(this);
+            return;
+        }
+        //如果是房主退出
+        if (mRoomOwner == user) {
+            //房主转给列表第一个人
+            mRoomOwner = mUsers.get(0);
+            return;
+        }
+        if (mRoomPainter == user) {
+            //如果是画画的人退出
+            //画画权交给另一个人 or 倒计时继续进行，直到时间耗尽自动转移 TODO
+
+            return;
+        }
+
+    }
+    //获取房间内所有人列表
+
+    public List<UserBean> getUsers() {
+        return mUsers;
+    }
+
+    //获取房间总人数
+
+    public int getUserCount() {
+        return mUsers.size();
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
+}

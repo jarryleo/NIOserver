@@ -3,7 +3,7 @@ package cn.leo.nio.service;
 import cn.leo.kotlin.utils.PropertiesUtil;
 import cn.leo.business.message.MsgHeartbeat;
 import cn.leo.business.message.MsgManager;
-import cn.leo.business.bean.UserInfoBean;
+import cn.leo.business.bean.UserBean;
 import cn.leo.business.user.UserManager;
 import cn.leo.nio.utils.Logger;
 
@@ -19,7 +19,7 @@ public class ServiceManager implements ServiceListener {
     // 新连接接入
     @Override
     public void onNewConnectComing(SelectionKey key) {
-        UserInfoBean user = new UserInfoBean(key);
+        UserBean user = new UserBean(key);
         UserManager.addUser(key, user);
         Logger.d("有客户端接入---" + user.getIp());
         int size = UserManager.getUsers().size();
@@ -46,7 +46,7 @@ public class ServiceManager implements ServiceListener {
 
     // 移除异常连接
     public static synchronized void removeConnect(SelectionKey key) {
-        UserInfoBean user = UserManager.getUser(key);
+        UserBean user = UserManager.getUser(key);
         if (user == null || key == null)
             return;
         Logger.d("有客户端失去连接---" + user.getIp());

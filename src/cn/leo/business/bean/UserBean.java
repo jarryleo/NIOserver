@@ -1,32 +1,34 @@
 package cn.leo.business.bean;
 
+import cn.leo.nio.utils.SocketUtil;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
 
-public class UserInfoBean {
+public class UserBean {
+    //用户所在房间
+    private RoomBean room;
+    //用户连接对象，用来通信
     private SelectionKey selectionKey;
-    private int userId;
+    //用户姓名
     private String userName;
+    //用户ip
     private String ip;
+    //用户id
+    private int userId;
+    //用户性别
     private int sex;
+    //用户头像
     private int icon;
+    //用户积分
     private int score;
+    //用户连接时间（上次心跳时间）
     private long connectTime;
 
-    public UserInfoBean(SelectionKey selectionKey) {
+    public UserBean(SelectionKey selectionKey) {
         this.selectionKey = selectionKey;
         this.connectTime = System.currentTimeMillis();
-        try {
-            SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
-            InetSocketAddress address = (InetSocketAddress) socketChannel.getRemoteAddress();
-            ip = address.getHostString();
-        } catch (IOException e) {
-
-        }
+        ip = SocketUtil.getSelectionKeyIp(selectionKey);
     }
 
     public SelectionKey getSelectionKey() {
@@ -93,8 +95,21 @@ public class UserInfoBean {
         this.connectTime = connectTime;
     }
 
+    public RoomBean getRoom() {
+        return room;
+    }
+
+    public void setRoom(RoomBean room) {
+        this.room = room;
+    }
+
     @Override
     public String toString() {
         return new Gson().toJson(this);
+    }
+
+    //更新心跳时间
+    public void refreshHeart(MsgBean msgBean) {
+        this.connectTime = msgBean.getTime();
     }
 }
