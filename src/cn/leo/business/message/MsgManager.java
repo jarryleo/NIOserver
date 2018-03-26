@@ -103,10 +103,10 @@ public class MsgManager {
      */
     public static void InterceptConnection(SelectionKey selectionKey, String errorMsg) {
         try {
+            Logger.i("断开链接[" + SocketUtil.getSelectionKeyIp(selectionKey) + "] - " + errorMsg);
             selectionKey.cancel();
             selectionKey.channel().close();
             UserManager.removeUser(selectionKey);
-            Logger.i("断开链接[" + SocketUtil.getSelectionKeyIp(selectionKey) + "] - " + errorMsg);
         } catch (IOException e) {
             //不处理
         }
