@@ -11,39 +11,42 @@ import cn.leo.nio.utils.GsonUtil;
 
 import java.nio.channels.SelectionKey;
 
-public class MsgLogin implements MsgExecutor {
+public class MsgEdit implements MsgExecutor {
     private static MsgExecutor msgExecutor;
 
-    private MsgLogin() {
+    private MsgEdit() {
     }
 
     public static MsgExecutor getInstance() {
         if (msgExecutor == null) {
-            msgExecutor = new MsgLogin();
+            msgExecutor = new MsgEdit();
         }
         return msgExecutor;
     }
 
     @Override
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
-        String name = msgBean.getMsg();
+        String json = msgBean.getMsg();
+        UserBean userBean = GsonUtil.fromJson(json, UserBean.class);
         //数据库查询用户是否存在
         UserDao dao = new UserDao();
-        UserBean login = dao.login(key, name);
-        //返回登录信息
+        int edit = 0;
+        if (userBean != null) {
+            edit = dao.edit(userBean);
+        }
+        //返回修改信息
         MsgBean msg = new MsgBean();
         msg.setType(MsgType.SYS.getType());
-        if (login != null) {
-            //登录成功
-            UserManager.removeUser(key);
-            UserManager.addUser(key, login);
-            //返回登录成功的消息
-            msg.setCode(MsgCode.LOG_SUC.getCode());
-            //把用户登录的bean的json发送过去
-            msg.setMsg(login.toString());
+        if (edit > 0) {
+            //修改成功
+            UserBean user = UserManager.getUser(key);
+            user.setIcon(userBean.getIcon());
+            user.setUserName(userBean.getUserName());
+            //返回修改成功的消息
+            msg.setCode(MsgCode.EDIT_SUC.getCode());
         } else {
-            //登录失败
-            msg.setCode(MsgCode.LOG_FAI.getCode());
+            //修改失败
+            msg.setCode(MsgCode.EDIT_FAI.getCode());
         }
         MsgManager.sendMsg(key, msg);
     }

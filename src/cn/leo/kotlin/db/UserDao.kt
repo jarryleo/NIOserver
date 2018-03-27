@@ -25,6 +25,9 @@ class UserDao {
                 .execute()
     }
 
+    /**
+     * 登录
+     */
     fun login(key: SelectionKey, name: String): UserBean? {
         val resultSet = mysqlHelper.Query()
                 .select("*")
@@ -32,9 +35,11 @@ class UserDao {
                 .where("name = ?", name)
                 .execute()
         if (resultSet.next()) {
+            val id = resultSet.getInt("id")
             val icon = resultSet.getInt("icon")
             val score = resultSet.getInt("score")
             val userBean = UserBean(key)
+            userBean.userId = id
             userBean.userName = name
             userBean.icon = icon
             userBean.score = score
@@ -43,6 +48,16 @@ class UserDao {
         resultSet.close()
         mysqlHelper.close()
         return null
+    }
+
+    /**
+     * 修改昵称和头像
+     */
+    fun edit(user: UserBean): Int {
+        return mysqlHelper.Update("tb_draw_user")
+                .set("name = ? , icon = ?", user.userName, user.icon)
+                .where("id = ?", user.userId)
+                .execute()
     }
 
 }

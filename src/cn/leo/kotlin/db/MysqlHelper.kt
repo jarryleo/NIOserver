@@ -50,7 +50,6 @@ class MysqlHelper {
 
         fun execute(): ResultSet {
             val sql = sb.toString()
-            Logger.d(sql)
             ps = conn.prepareStatement(sql)
             args?.forEachIndexed { index, any ->
                 when (any) {
@@ -83,7 +82,6 @@ class MysqlHelper {
 
         fun execute(): Int {
             val sql = sb.toString()
-            Logger.d(sql)
             ps = conn.prepareStatement(sql)
             args?.forEachIndexed { index, any ->
                 when (any) {
@@ -95,15 +93,19 @@ class MysqlHelper {
                     }
                 }
             }
-            val insert = ps?.executeUpdate()
-            close()
-            return insert!!
+            return try {
+                ps?.executeUpdate()!!
+            } catch (e: Exception) {
+                -1
+            } finally {
+                close()
+            }
         }
 
     }
 
     inner class Update(table: String) {
-        //"update person set password = ? where name = ?"
+        //"update person set password = ?,name = ? where name = ?"
         private val sb = StringBuilder("update $table ")
         private var args: List<Any>? = ArrayList()
 
@@ -121,7 +123,6 @@ class MysqlHelper {
 
         fun execute(): Int {
             val sql = sb.toString()
-            Logger.d(sql)
             ps = conn.prepareStatement(sql)
             args?.forEachIndexed { index, any ->
                 when (any) {
@@ -156,7 +157,6 @@ class MysqlHelper {
 
         fun execute(): Int {
             val sql = sb.toString()
-            Logger.d(sql)
             ps = conn.prepareStatement(sql)
             args?.forEachIndexed { index, any ->
                 when (any) {

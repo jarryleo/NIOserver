@@ -1,9 +1,10 @@
 package cn.leo.business.bean;
 
+import cn.leo.nio.utils.GsonUtil;
 import cn.leo.nio.utils.SocketUtil;
-import com.google.gson.Gson;
 
 import java.nio.channels.SelectionKey;
+import java.util.Objects;
 
 public class UserBean {
     //用户所在房间
@@ -104,12 +105,25 @@ public class UserBean {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserBean userBean = (UserBean) o;
+        return userId == userBean.userId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
+    @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return GsonUtil.toJson(this);
     }
 
     //更新心跳时间
     public void refreshHeart(MsgBean msgBean) {
-        this.connectTime = msgBean.getTime();
+        this.connectTime = System.currentTimeMillis();
     }
 }

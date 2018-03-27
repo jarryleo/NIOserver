@@ -1,18 +1,14 @@
 package cn.leo.business.bean;
 
-import cn.leo.business.constant.MsgType;
-import com.google.gson.Gson;
+import cn.leo.nio.utils.GsonUtil;
 
 public class MsgBean {
-    private MsgType type; // 消息类型
     private String msg; // 消息内容
+    private int id; //消息id
+    private int type; // 消息类型
     private int code; // 消息错误码
+    private int area; // 房间号 如果有群或者房间的话
     private long time; // 消息时间
-    private long area; // 房间号 如果有群或者房间的话
-
-    public MsgBean() {
-        time = System.currentTimeMillis();
-    }
 
     public String getMsg() {
         return msg;
@@ -22,19 +18,19 @@ public class MsgBean {
         this.msg = msg;
     }
 
-    public long getTime() {
-        return time;
+    public int getId() {
+        return id;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public MsgType getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(MsgType type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -46,16 +42,24 @@ public class MsgBean {
         this.code = code;
     }
 
-    public long getArea() {
+    public int getArea() {
         return area;
     }
 
-    public void setArea(long area) {
+    public void setArea(int area) {
         this.area = area;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return GsonUtil.toJson(this);
     }
 }

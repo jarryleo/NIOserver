@@ -10,7 +10,7 @@ public class MsgHeartbeat extends Thread {
 
     private MsgHeartbeat() {
         super();
-        SYSMSG.setType(MsgType.SYS);
+        SYSMSG.setType(MsgType.SYS.getType());
         SYSMSG.setCode(MsgCode.HEART.getCode());
     }
 
@@ -23,9 +23,9 @@ public class MsgHeartbeat extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            SYSMSG.setTime(System.currentTimeMillis());
-            sendHeartMsg();
+        for (; ; ) {
+            //SYSMSG.setTime(System.currentTimeMillis());
+            checkHeart();
             try {
                 sleep(INTERVAL);
             } catch (InterruptedException e) {
@@ -38,6 +38,13 @@ public class MsgHeartbeat extends Thread {
      * 发送心跳信息
      */
     private void sendHeartMsg() {
-        MsgManager.sendMsgToAll(SYSMSG);
+        //MsgManager.sendMsgToAll(SYSMSG);
+    }
+
+    /**
+     * 检测心跳
+     */
+    private void checkHeart() {
+        MsgManager.checkHeart();
     }
 }

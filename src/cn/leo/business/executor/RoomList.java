@@ -26,7 +26,7 @@ public class RoomList implements MsgExecutor {
     @Override
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
         MsgBean msg = new MsgBean();
-        msg.setType(MsgType.GAME);
+        msg.setType(MsgType.GAME.getType());
         msg.setCode(MsgCode.ROOM_LIST.getCode());
         msg.setMsg(RoomManager.getRoomListJson());
         MsgManager.sendMsg(key, msg);

@@ -6,10 +6,9 @@ import cn.leo.business.bean.UserBean;
 import cn.leo.business.factory.MsgExecutorFactory;
 import cn.leo.business.user.UserManager;
 import cn.leo.nio.service.ServiceCore;
+import cn.leo.nio.utils.GsonUtil;
 import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.SocketUtil;
-import cn.leo.nio.utils.TextUtil;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MsgManager {
-    private final static int TIME_OUT = 5000;// 超时时间 5000 毫秒
+    private final static int TIME_OUT = 30_000;// 超时时间  毫秒
 
     /**
      * 发送消息到单一对象
@@ -38,20 +37,9 @@ public class MsgManager {
      */
     public static void sendMsgToAll(MsgBean msg) {
         Set<SelectionKey> users = UserManager.getUsers();
-
-        Iterator<SelectionKey> iterator = users.iterator();
-        long currentTime = System.currentTimeMillis();
-        while (iterator.hasNext()) {
-            SelectionKey selectionKey = iterator.next();
-            UserBean user = UserManager.getUser(selectionKey);
-            if (TextUtil.isEmpty(user.getUserName()) &&
-                    currentTime - user.getConnectTime() > TIME_OUT) {
-                // 超时没有登录的链接剔除
-                InterceptConnection(selectionKey, "未登录");
-            } else {
-                // 发送消息
-                sendMsg(selectionKey, msg);
-            }
+        for (SelectionKey selectionKey : users) {
+            // 发送消息
+            sendMsg(selectionKey, msg);
         }
     }
 
@@ -65,11 +53,9 @@ public class MsgManager {
     public static void sendMsgToRoom(UserBean userBean, MsgBean msgBean, boolean exceptSender) {
         RoomBean room = userBean.getRoom();
         List<UserBean> users = room.getUsers();
-        Iterator<UserBean> iterator = users.listIterator();
-        while (iterator.hasNext()) {
-            UserBean next = iterator.next();
+        for (UserBean user : users) {
             //不发给发消息的人
-            if (next == userBean && exceptSender) {
+            if (user == userBean && exceptSender) {
                 continue;
             }
             sendMsg(userBean.getSelectionKey(), msgBean);
@@ -85,15 +71,28 @@ public class MsgManager {
     public static void processMsg(SelectionKey key, String msgJson) {
         MsgBean msgBean = null;
         //判断消息是否合法
-        try {
-            msgBean = new Gson().fromJson(msgJson, MsgBean.class);
-        } catch (Exception e) {
-            //非法消息，直接断开连接
+        msgBean = GsonUtil.fromJson(msgJson, MsgBean.class);
+        if (msgBean == null) {
             InterceptConnection(key, "非法连接");
             return;
         }
         //消息分发策略
         MsgExecutorFactory.executeMsg(key, msgBean);
+    }
+
+    public static void checkHeart() {
+        Set<SelectionKey> users = UserManager.getUsers();
+        Iterator<SelectionKey> iterator = users.iterator();
+        long currentTime = System.currentTimeMillis();
+        while (iterator.hasNext()) {
+            SelectionKey selectionKey = iterator.next();
+            UserBean user = UserManager.getUser(selectionKey);
+            if (/*TextUtil.isEmpty(user.getUserName()) &&*/
+                    currentTime - user.getConnectTime() > TIME_OUT) {
+                // 超时没有登录的链接剔除
+                InterceptConnection(selectionKey, "未登录");
+            }
+        }
     }
 
     /**

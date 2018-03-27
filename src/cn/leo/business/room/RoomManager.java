@@ -2,7 +2,7 @@ package cn.leo.business.room;
 
 import cn.leo.business.bean.RoomBean;
 import cn.leo.business.bean.UserBean;
-import com.google.gson.Gson;
+import cn.leo.nio.utils.GsonUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class RoomManager {
     }
 
     public static String getRoomListJson() {
-        return new Gson().toJson(mRooms);
+        return GsonUtil.toJson(mRooms);
     }
 
 }
