@@ -7,7 +7,8 @@ import cn.leo.business.constant.MsgType;
 import cn.leo.business.message.MsgManager;
 import cn.leo.business.user.UserManager;
 import cn.leo.kotlin.db.UserDao;
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
+import cn.leo.nio.utils.Logger;
 
 import java.nio.channels.SelectionKey;
 
@@ -27,12 +28,14 @@ public class MsgEdit implements MsgExecutor {
     @Override
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
         String json = msgBean.getMsg();
-        UserBean userBean = GsonUtil.fromJson(json, UserBean.class);
+        Logger.d("edit:" + json);
+        UserBean userBean = JsonUtil.fromJson(json, UserBean.class);
         //数据库查询用户是否存在
         UserDao dao = new UserDao();
         int edit = 0;
         if (userBean != null) {
             edit = dao.edit(userBean);
+            Logger.d("edit:" + userBean.toString());
         }
         //返回修改信息
         MsgBean msg = new MsgBean();

@@ -1,6 +1,6 @@
 package cn.leo.business.bean;
 
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
 import cn.leo.nio.utils.SocketUtil;
 
 import java.nio.channels.SelectionKey;
@@ -119,7 +119,7 @@ public class UserBean {
 
     @Override
     public String toString() {
-        return GsonUtil.toJson(this);
+        return JsonUtil.toJson(this);
     }
 
     //更新心跳时间

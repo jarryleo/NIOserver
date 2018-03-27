@@ -1,7 +1,7 @@
 package cn.leo.business.bean;
 
 import cn.leo.business.room.RoomManager;
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -125,6 +125,6 @@ public class RoomBean {
 
     @Override
     public String toString() {
-        return GsonUtil.toJson(this);
+        return JsonUtil.toJson(this);
     }
 }

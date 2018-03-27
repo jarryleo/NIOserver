@@ -6,7 +6,7 @@ import cn.leo.business.bean.UserBean;
 import cn.leo.business.factory.MsgExecutorFactory;
 import cn.leo.business.user.UserManager;
 import cn.leo.nio.service.ServiceCore;
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
 import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.SocketUtil;
 
@@ -71,7 +71,7 @@ public class MsgManager {
     public static void processMsg(SelectionKey key, String msgJson) {
         MsgBean msgBean = null;
         //判断消息是否合法
-        msgBean = GsonUtil.fromJson(msgJson, MsgBean.class);
+        msgBean = JsonUtil.fromJson(msgJson, MsgBean.class);
         if (msgBean == null) {
             InterceptConnection(key, "非法连接");
             return;

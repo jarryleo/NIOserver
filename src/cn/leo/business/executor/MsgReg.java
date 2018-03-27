@@ -6,7 +6,7 @@ import cn.leo.business.constant.MsgCode;
 import cn.leo.business.constant.MsgType;
 import cn.leo.business.message.MsgManager;
 import cn.leo.kotlin.db.UserDao;
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
 
 import java.nio.channels.SelectionKey;
 
@@ -26,7 +26,7 @@ public class MsgReg implements MsgExecutor {
     @Override
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
         String json = msgBean.getMsg();
-        UserBean userBean = GsonUtil.fromJson(json, UserBean.class);
+        UserBean userBean = JsonUtil.fromJson(json, UserBean.class);
         //查询数据库是否可以添加
         UserDao dao = new UserDao();
         int i = -1;

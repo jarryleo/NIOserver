@@ -1,6 +1,6 @@
 package cn.leo.business.bean;
 
-import cn.leo.nio.utils.GsonUtil;
+import cn.leo.nio.utils.JsonUtil;
 
 public class RegBean {
     private String username;
@@ -51,6 +51,6 @@ public class RegBean {
 
     @Override
     public String toString() {
-        return GsonUtil.toJson(this);
+        return JsonUtil.toJson(this);
     }
 }
