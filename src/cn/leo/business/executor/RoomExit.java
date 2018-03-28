@@ -28,7 +28,9 @@ public class RoomExit implements MsgExecutor {
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
         UserBean user = UserManager.getUser(key);
         RoomBean room = user.getRoom();
-        room.removeUser(user);
+        if (room != null) {
+            room.removeUser(user);
+        }
     }
 
 }

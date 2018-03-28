@@ -22,6 +22,8 @@ public class GameExecutorFactory {
             return RoomJoin.getInstance();
         } else if (msgCode == MsgCode.ROOM_EXIT.getCode()) {
             return RoomExit.getInstance();
+        } else if (msgCode == MsgCode.GAME_START.getCode()) {
+            return GameStart.getInstance();
         }
         return MsgError.getInstance();
     }
