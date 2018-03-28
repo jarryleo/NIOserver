@@ -2,15 +2,18 @@ package cn.leo.business.bean;
 
 import cn.leo.nio.utils.JsonUtil;
 import cn.leo.nio.utils.SocketUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.nio.channels.SelectionKey;
 import java.util.Objects;
 
 public class UserBean {
     //用户所在房间
-    private RoomBean room;
+    @JSONField(serialize = false)
+    private transient RoomBean room;
     //用户连接对象，用来通信
-    private SelectionKey selectionKey;
+    @JSONField(serialize = false)
+    private transient SelectionKey selectionKey;
     //用户姓名
     private String userName;
     //用户ip
@@ -24,7 +27,11 @@ public class UserBean {
     //用户积分
     private int score;
     //用户连接时间（上次心跳时间）
-    private long connectTime;
+    @JSONField(serialize = false)
+    private transient long connectTime;
+
+    public UserBean() {
+    }
 
     public UserBean(SelectionKey selectionKey) {
         this.selectionKey = selectionKey;

@@ -90,7 +90,7 @@ public class MsgManager {
             if (/*TextUtil.isEmpty(user.getUserName()) &&*/
                     currentTime - user.getConnectTime() > TIME_OUT) {
                 // 超时没有登录的链接剔除
-                InterceptConnection(selectionKey, "未登录");
+                InterceptConnection(selectionKey, "心跳超时");
             }
         }
     }

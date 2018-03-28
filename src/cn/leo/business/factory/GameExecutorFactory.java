@@ -16,6 +16,12 @@ public class GameExecutorFactory {
     private static MsgExecutor getMsgExecutor(int msgCode) {
         if (msgCode == MsgCode.ROOM_LIST.getCode()) {
             return RoomList.getInstance();
+        } else if (msgCode == MsgCode.ROOM_CREATE.getCode()) {
+            return RoomCreate.getInstance();
+        } else if (msgCode == MsgCode.ROOM_JOIN.getCode()) {
+            return RoomJoin.getInstance();
+        } else if (msgCode == MsgCode.ROOM_EXIT.getCode()) {
+            return RoomExit.getInstance();
         }
         return MsgError.getInstance();
     }

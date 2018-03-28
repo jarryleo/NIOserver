@@ -7,8 +7,11 @@ import cn.leo.nio.utils.JsonUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomManager {
+    //private static volatile int maxId = 1;
+    private static AtomicInteger maxId = new AtomicInteger(1);
     //当前服务器内所有房间列表
     private static List<RoomBean> mRooms = Collections.synchronizedList(new ArrayList<RoomBean>());
 
@@ -17,11 +20,11 @@ public class RoomManager {
      *
      * @param user 创建房间的玩家，房主
      */
-    public static void createRoom(UserBean user) {
+    public static RoomBean createRoom(UserBean user) {
         //创建房间对象
         RoomBean room = new RoomBean();
         //设置房间id ，按服务器所有房间序号创建
-        room.setRoomId(mRooms.size() + 1);
+        room.setRoomId(maxId.getAndIncrement());
         //房主第一个进入房间
         room.addUser(user);
         //标记房主
@@ -30,6 +33,22 @@ public class RoomManager {
         room.setRoomPainter(user);
         //房间加入列表
         mRooms.add(room);
+        return room;
+    }
+
+    /**
+     * 根据房间id回去房间
+     *
+     * @param roomId
+     * @return
+     */
+    public static RoomBean getRoomWithId(int roomId) {
+        for (RoomBean room : mRooms) {
+            if (room.getRoomId() == roomId) {
+                return room;
+            }
+        }
+        return null;
     }
 
     /**

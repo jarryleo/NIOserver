@@ -2,6 +2,7 @@ package cn.leo.business.bean;
 
 import cn.leo.business.room.RoomManager;
 import cn.leo.nio.utils.JsonUtil;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,17 +14,22 @@ public class RoomBean {
     //房间id
     private int mRoomId;
     //房间正在画画的词汇
-    private String mWord;
+    @JSONField(serialize = false)
+    private transient String mWord;
     //画画的词汇提示语
-    private String mWordTips;
+    @JSONField(serialize = false)
+    private transient String mWordTips;
     //房间状态，0为未开始游戏，1-n为进行到第n轮
     private int mRoomState;
     //房主
-    private UserBean mRoomOwner;
+    @JSONField(serialize = false)
+    private transient UserBean mRoomOwner;
     //当前房间绘画人
-    private UserBean mRoomPainter;
+    @JSONField(serialize = false)
+    private transient UserBean mRoomPainter;
     //当前画画倒计时
-    private int mPaintCountDown;
+    @JSONField(serialize = false)
+    private transient int mPaintCountDown;
 
     public int getRoomId() {
         return mRoomId;
@@ -83,6 +89,9 @@ public class RoomBean {
 
     //玩家进入房间
     public void addUser(UserBean user) {
+        if (mUsers.contains(user)) {
+            mUsers.remove(user);
+        }
         mUsers.add(user);
         user.setRoom(this);
     }
