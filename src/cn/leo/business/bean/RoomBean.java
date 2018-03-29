@@ -14,9 +14,9 @@ public class RoomBean {
     //房间id
     private int mRoomId;
     //房间正在画画的词汇
-    private String mWord;
+    private String mWord = "";
     //画画的词汇提示语
-    private String mWordTips;
+    private String mWordTips = "";
     //房间状态，0为未开始游戏，1-n为进行到第n轮
     private int mRoomState;
     //答对题目的人

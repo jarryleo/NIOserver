@@ -35,7 +35,6 @@ public class MsgLogin implements MsgExecutor {
         msg.setType(MsgType.SYS.getType());
         if (login != null) {
             //登录成功
-            UserManager.removeUser(key);
             UserManager.addUser(key, login);
             //返回登录成功的消息
             msg.setCode(MsgCode.LOG_SUC.getCode());
