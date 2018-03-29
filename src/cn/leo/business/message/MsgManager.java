@@ -11,6 +11,7 @@ import cn.leo.nio.utils.Logger;
 import cn.leo.nio.utils.SocketUtil;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.SelectionKey;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +28,11 @@ public class MsgManager {
      */
     public static void sendMsg(SelectionKey key, MsgBean msg) {
         String info = msg.toString();
-        ServiceCore.sendMsg(key, info.getBytes());
+        try {
+            ServiceCore.sendMsg(key, info.getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -52,6 +57,7 @@ public class MsgManager {
      */
     public static void sendMsgToRoom(UserBean userBean, MsgBean msgBean, boolean exceptSender) {
         RoomBean room = userBean.getRoom();
+        if (room == null) return;
         List<UserBean> users = room.getUsers();
         for (UserBean user : users) {
             //不发给发消息的人

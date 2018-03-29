@@ -30,11 +30,6 @@ public class RoomJoin implements MsgExecutor {
             int roomId = Integer.parseInt(msgBean.getMsg());
             //加入房间
             UserBean user = UserManager.getUser(key);
-            RoomBean room = user.getRoom();
-            if (room != null) {
-                joinSuccess(user, room);
-                return;
-            }
             RoomBean roomBean = RoomManager.getRoomWithId(roomId);
             if (roomBean != null) {
                 roomBean.addUser(user);
@@ -54,7 +49,7 @@ public class RoomJoin implements MsgExecutor {
         msg.setType(MsgType.GAME.getType());
         msg.setCode(MsgCode.ROOM_JOIN_SUC.getCode());
         msg.setMsg(roomBean.toString());
-        MsgManager.sendMsgToRoom(user, msg, false);
+        MsgManager.sendMsgToRoom(roomBean, msg);
     }
 
     private void joinFailed(SelectionKey key) {

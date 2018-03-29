@@ -29,7 +29,7 @@ public class GameGift implements MsgExecutor {
         UserBean user = UserManager.getUser(key);
         RoomBean room = user.getRoom();
         UserBean roomPainter = room.getRoomPainter();
-        SelectionKey painterKey = UserManager.getKey(roomPainter);
+        SelectionKey painterKey = roomPainter.getSelectionKey();
         MsgManager.sendMsg(painterKey, msgBean);
     }
 }

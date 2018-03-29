@@ -27,6 +27,7 @@ public class GameChat implements MsgExecutor {
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
         UserBean user = UserManager.getUser(key);
         RoomBean room = user.getRoom();
+        if (room == null) return;
         //聊天信息
         String msg = msgBean.getMsg();
         String word = room.getWord();

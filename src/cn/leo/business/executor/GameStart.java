@@ -32,20 +32,20 @@ public class GameStart implements MsgExecutor {
         RoomBean room = user.getRoom();
         if (room.getRoomOwner() == user) {
             //房主才能开始游戏
-            startSuccess(user, room);
+            startSuccess(room);
         } else {
             startFailed(key);
         }
     }
 
-    private void startSuccess(UserBean user, RoomBean room) {
+    private void startSuccess(RoomBean room) {
         //初始化房间状态
         room.setRoomState(1);//游戏状态，第一轮
         //返回成功消息(房间json),还要通知房间内其他人更新列表
         MsgBean msg = new MsgBean();
         msg.setType(MsgType.GAME.getType());
         msg.setCode(MsgCode.GAME_START_SUC.getCode());
-        MsgManager.sendMsgToRoom(user, msg, false);
+        MsgManager.sendMsgToRoom(room, msg);
     }
 
     private void startFailed(SelectionKey key) {

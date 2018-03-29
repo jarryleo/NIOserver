@@ -30,12 +30,11 @@ public class RoomExit implements MsgExecutor {
         RoomBean room = user.getRoom();
         if (room != null) {
             room.removeUser(user);
+            MsgBean msg = new MsgBean();
+            msg.setType(MsgType.GAME.getType());
+            msg.setCode(MsgCode.ROOM_INFO.getCode());
+            msg.setMsg(room.toString());
+            MsgManager.sendMsgToRoom(user, msg, true);
         }
-        MsgBean msg = new MsgBean();
-        msg.setType(MsgType.GAME.getType());
-        msg.setCode(MsgCode.ROOM_INFO.getCode());
-        msg.setMsg(room.toString());
-        MsgManager.sendMsg(key, msg);
     }
-
 }

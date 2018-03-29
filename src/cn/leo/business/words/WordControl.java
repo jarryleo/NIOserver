@@ -12,8 +12,9 @@ public class WordControl {
         File wordFile = new File("words");
         LineNumberReader lnr = null;
         try {
-            FileReader fr = new FileReader(wordFile);
-            lnr = new LineNumberReader(fr);
+            InputStream is = new FileInputStream(wordFile);
+            InputStreamReader isr = new InputStreamReader(is, "utf-8");
+            lnr = new LineNumberReader(isr);
             String line = null;
             while ((line = lnr.readLine()) != null) {
                 lines.add(line);

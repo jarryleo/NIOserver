@@ -27,8 +27,10 @@ public class MsgSystem implements MsgExecutor {
         //更新心跳
         if (msgBean.getCode() == MsgCode.HEART.getCode()) {
             UserBean user = UserManager.getUser(key);
-            user.refreshHeart(msgBean);
-            MsgManager.sendMsg(key,msgBean);
+            if (user != null) {
+                user.refreshHeart(msgBean);
+                MsgManager.sendMsg(key, msgBean);
+            }
         }
     }
 }

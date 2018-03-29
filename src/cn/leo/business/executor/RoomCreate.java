@@ -35,5 +35,13 @@ public class RoomCreate implements MsgExecutor {
         msg.setCode(MsgCode.ROOM_CREATE_SUC.getCode());
         msg.setMsg(room.toString());
         MsgManager.sendMsg(key, msg);
+        //给所有没有房间的玩家发送
+        msg.setCode(MsgCode.ROOM_LIST.getCode());
+        msg.setMsg(RoomManager.getRoomListJson());
+        for (SelectionKey selectionKey : UserManager.getUsers()) {
+            if (UserManager.getUser(selectionKey).getRoom() == null) {
+                MsgManager.sendMsg(selectionKey, msg);
+            }
+        }
     }
 }

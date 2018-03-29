@@ -106,7 +106,7 @@ public class RoomBean {
     //玩家退出房间
     public void removeUser(UserBean user) {
         mUsers.remove(user);
-        user.setRoom(null);
+        //user.setRoom(null);
         //如果房间没人了
         if (getUserCount() == 0) {
             //从服务器删除房间

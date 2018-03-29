@@ -35,7 +35,13 @@ public class MsgLogin implements MsgExecutor {
         msg.setType(MsgType.SYS.getType());
         if (login != null) {
             //登录成功
-            UserManager.addUser(key, login);
+            //UserManager.addUser(key, login);
+            UserBean user = UserManager.getUser(key);
+            user.setUserName(login.getUserName());
+            user.setIcon(login.getIcon());
+            user.setIp(login.getIp());
+            user.setScore(login.getScore());
+            user.setSex(login.getSex());
             //返回登录成功的消息
             msg.setCode(MsgCode.LOG_SUC.getCode());
             //把用户登录的bean的json发送过去

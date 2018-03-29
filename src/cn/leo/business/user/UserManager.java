@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserManager {
 
     private static ConcurrentHashMap<SelectionKey, UserBean> mUsers = new ConcurrentHashMap<>();
-    private static ConcurrentHashMap<UserBean, SelectionKey> mKeys = new ConcurrentHashMap<>();
 
     /**
      * 添加连接到管理类
@@ -17,13 +16,7 @@ public class UserManager {
      * @param user
      */
     public static void addUser(SelectionKey key, UserBean user) {
-        if (mKeys.containsKey(user)) {
-            SelectionKey key1 = mKeys.get(user);
-            mUsers.remove(key1);
-            mKeys.remove(user);
-        }
         mUsers.put(key, user);
-        mKeys.put(user, key);
     }
 
     /**
@@ -32,9 +25,7 @@ public class UserManager {
      * @param key
      */
     public static void removeUser(SelectionKey key) {
-        UserBean user = mUsers.get(key);
         mUsers.remove(key);
-        mKeys.remove(user);
     }
 
     /**
@@ -56,13 +47,4 @@ public class UserManager {
         return mUsers.get(key);
     }
 
-    /**
-     * 根据用户获取连接
-     *
-     * @param user
-     * @return
-     */
-    public static SelectionKey getKey(UserBean user) {
-        return mKeys.get(user);
-    }
 }

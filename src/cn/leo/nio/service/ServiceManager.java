@@ -8,6 +8,7 @@ import cn.leo.business.bean.UserBean;
 import cn.leo.business.user.UserManager;
 import cn.leo.nio.utils.Logger;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.SelectionKey;
 
 public class ServiceManager implements ServiceListener {
@@ -37,13 +38,13 @@ public class ServiceManager implements ServiceListener {
     // 消息抵达
     @Override
     public void onDataArrived(SelectionKey key, byte[] data) {
-        String msg = new String(data);
-        MsgManager.processMsg(key, msg);
-
-        // Logger.d(msg + "-----" + UserManager.getUser(key).getIp());
-        // MsgBean msgBean = new MsgBean();
-        // msgBean.setMsg(msg);
-        // MsgManager.sendMsg(key, msgBean);// 把客服端发来的消息回发到客户端
+        String msg = null;
+        try {
+            msg = new String(data, "utf-8");
+            MsgManager.processMsg(key, msg);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     // 移除异常连接

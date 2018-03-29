@@ -6,7 +6,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 public class JsonUtil {
     public static <T> T fromJson(String json, Class<T> classOfT) {
         try {
-            Logger.d("from:" + json);
+            //Logger.d("from:" + json);
             return JSON.parseObject(json, classOfT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -16,7 +16,7 @@ public class JsonUtil {
 
     public static String toJson(Object src) {
         String s = JSON.toJSONString(src, SerializerFeature.DisableCircularReferenceDetect);
-        Logger.d("to:" + s);
+        //Logger.d("to:" + s);
         return s;
     }
 }
