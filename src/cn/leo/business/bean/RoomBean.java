@@ -19,6 +19,8 @@ public class RoomBean {
     private String mWordTips;
     //房间状态，0为未开始游戏，1-n为进行到第n轮
     private int mRoomState;
+    //答对题目的人
+    private int answerRightCount;
     //房主
     @JSONField(serialize = false)
     private transient UserBean mRoomOwner;
@@ -82,6 +84,14 @@ public class RoomBean {
 
     public void setWordTips(String wordTips) {
         mWordTips = wordTips;
+    }
+
+    public int getAnswerRightCount() {
+        return answerRightCount;
+    }
+
+    public void setAnswerRightCount(int answerRightCount) {
+        this.answerRightCount = answerRightCount;
     }
 
     //玩家进入房间
@@ -148,6 +158,7 @@ public class RoomBean {
         int i = mUsers.indexOf(mRoomPainter);
         if (i >= mUsers.size() - 1) {
             i = 0;
+            answerRightCount = 0;
             mRoomState++;
         } else {
             i++;

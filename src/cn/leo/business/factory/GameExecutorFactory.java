@@ -25,6 +25,11 @@ public class GameExecutorFactory {
             return RoomInfo.getInstance();
         } else if (msgCode == MsgCode.GAME_START.getCode()) {
             return GameStart.getInstance();
+        } else if (msgCode == MsgCode.GAME_CHAT.getCode()) {
+            return GameChat.getInstance();
+        } else if (msgCode == MsgCode.GAME_GIFT_FLOWER.getCode() ||
+                msgCode == MsgCode.GAME_GIFT_SLIPPER.getCode()) {
+            return GameGift.getInstance();
         }
         return MsgError.getInstance();
     }

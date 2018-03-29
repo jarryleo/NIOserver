@@ -4,6 +4,7 @@ import cn.leo.nio.utils.JsonUtil;
 
 public class MsgBean {
     private String msg; // 消息内容
+    private String senderName; //发消息的人
     private int id; //消息id
     private int type; // 消息类型
     private int code; // 消息错误码
@@ -56,6 +57,14 @@ public class MsgBean {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     @Override

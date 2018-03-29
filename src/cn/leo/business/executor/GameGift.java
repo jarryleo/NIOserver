@@ -6,36 +6,30 @@ import cn.leo.business.bean.UserBean;
 import cn.leo.business.constant.MsgCode;
 import cn.leo.business.constant.MsgType;
 import cn.leo.business.message.MsgManager;
-import cn.leo.business.room.RoomManager;
 import cn.leo.business.user.UserManager;
 
 import java.nio.channels.SelectionKey;
 
-public class RoomExit implements MsgExecutor {
+public class GameGift implements MsgExecutor {
     private static MsgExecutor msgExecutor;
 
-    private RoomExit() {
+    private GameGift() {
     }
 
     public static MsgExecutor getInstance() {
         if (msgExecutor == null) {
-            msgExecutor = new RoomExit();
+            msgExecutor = new GameGift();
         }
         return msgExecutor;
     }
 
     @Override
     public void executeMsg(SelectionKey key, MsgBean msgBean) {
+        //送礼物
         UserBean user = UserManager.getUser(key);
         RoomBean room = user.getRoom();
-        if (room != null) {
-            room.removeUser(user);
-        }
-        MsgBean msg = new MsgBean();
-        msg.setType(MsgType.GAME.getType());
-        msg.setCode(MsgCode.ROOM_INFO.getCode());
-        msg.setMsg(room.toString());
-        MsgManager.sendMsg(key, msg);
+        UserBean roomPainter = room.getRoomPainter();
+        SelectionKey painterKey = UserManager.getKey(roomPainter);
+        MsgManager.sendMsg(painterKey, msgBean);
     }
-
 }
