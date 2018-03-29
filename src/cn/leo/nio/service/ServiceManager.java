@@ -1,5 +1,6 @@
 package cn.leo.nio.service;
 
+import cn.leo.business.message.GameControl;
 import cn.leo.kotlin.utils.PropertiesUtil;
 import cn.leo.business.message.MsgHeartbeat;
 import cn.leo.business.message.MsgManager;
@@ -13,7 +14,8 @@ public class ServiceManager implements ServiceListener {
 
     public ServiceManager() {
         ServiceCore.StartService(this, PropertiesUtil.INSTANCE.getPort()); // 启动服务器
-        MsgHeartbeat.StartHeartbeat();// 开启心跳检测机制
+        MsgHeartbeat.startHeartbeat();// 开启心跳检测机制
+        GameControl.startGameControl();// 开启游戏流程控制器
     }
 
     // 新连接接入

@@ -17,7 +17,7 @@ public class MsgHeartbeat extends Thread {
     /**
      * 启动心跳检测机制
      */
-    public static void StartHeartbeat() {
+    public static void startHeartbeat() {
         new MsgHeartbeat().start();
     }
 

@@ -8,6 +8,7 @@ import cn.leo.business.constant.MsgType;
 import cn.leo.business.message.MsgManager;
 import cn.leo.business.room.RoomManager;
 import cn.leo.business.user.UserManager;
+import cn.leo.business.words.WordControl;
 
 import java.nio.channels.SelectionKey;
 
@@ -31,13 +32,15 @@ public class GameStart implements MsgExecutor {
         RoomBean room = user.getRoom();
         if (room.getRoomOwner() == user) {
             //房主才能开始游戏
-            startSuccess(user);
+            startSuccess(user, room);
         } else {
             startFailed(key);
         }
     }
 
-    private void startSuccess(UserBean user) {
+    private void startSuccess(UserBean user, RoomBean room) {
+        //初始化房间状态
+        room.setRoomState(1);//游戏状态，第一轮
         //返回成功消息(房间json),还要通知房间内其他人更新列表
         MsgBean msg = new MsgBean();
         msg.setType(MsgType.GAME.getType());

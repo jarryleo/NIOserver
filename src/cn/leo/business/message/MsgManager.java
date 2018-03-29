@@ -58,7 +58,20 @@ public class MsgManager {
             if (user == userBean && exceptSender) {
                 continue;
             }
-            sendMsg(userBean.getSelectionKey(), msgBean);
+            sendMsg(user.getSelectionKey(), msgBean);
+        }
+    }
+
+    /**
+     * 发送消息给一个房间的所有人
+     *
+     * @param room    房间
+     * @param msgBean 消息
+     */
+    public static void sendMsgToRoom(RoomBean room, MsgBean msgBean) {
+        List<UserBean> users = room.getUsers();
+        for (UserBean user : users) {
+            sendMsg(user.getSelectionKey(), msgBean);
         }
     }
 

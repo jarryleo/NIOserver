@@ -14,11 +14,9 @@ public class RoomBean {
     //房间id
     private int mRoomId;
     //房间正在画画的词汇
-    @JSONField(serialize = false)
-    private transient String mWord;
+    private String mWord;
     //画画的词汇提示语
-    @JSONField(serialize = false)
-    private transient String mWordTips;
+    private String mWordTips;
     //房间状态，0为未开始游戏，1-n为进行到第n轮
     private int mRoomState;
     //房主
@@ -28,8 +26,7 @@ public class RoomBean {
     @JSONField(serialize = false)
     private transient UserBean mRoomPainter;
     //当前画画倒计时
-    @JSONField(serialize = false)
-    private transient int mPaintCountDown;
+    private int mPaintCountDown;
 
     public int getRoomId() {
         return mRoomId;
@@ -120,6 +117,15 @@ public class RoomBean {
         }
 
     }
+
+    /**
+     * 计时
+     */
+    public void countDown() {
+        if (mPaintCountDown > 0) {
+            mPaintCountDown--;
+        }
+    }
     //获取房间内所有人列表
 
     public List<UserBean> getUsers() {
@@ -135,5 +141,17 @@ public class RoomBean {
     @Override
     public String toString() {
         return JsonUtil.toJson(this);
+    }
+
+    //下一个画画
+    public void nextPaint() {
+        int i = mUsers.indexOf(mRoomPainter);
+        if (i >= mUsers.size() - 1) {
+            i = 0;
+            mRoomState++;
+        } else {
+            i++;
+        }
+        mRoomPainter = mUsers.get(i);
     }
 }

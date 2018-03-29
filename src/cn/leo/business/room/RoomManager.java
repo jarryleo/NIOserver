@@ -64,4 +64,7 @@ public class RoomManager {
         return JsonUtil.toJson(mRooms);
     }
 
+    public static List<RoomBean> getmRooms() {
+        return mRooms;
+    }
 }

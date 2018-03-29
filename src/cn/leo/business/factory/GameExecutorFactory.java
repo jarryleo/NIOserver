@@ -2,7 +2,6 @@ package cn.leo.business.factory;
 
 import cn.leo.business.bean.MsgBean;
 import cn.leo.business.constant.MsgCode;
-import cn.leo.business.constant.MsgType;
 import cn.leo.business.executor.*;
 
 import java.nio.channels.SelectionKey;
@@ -22,6 +21,8 @@ public class GameExecutorFactory {
             return RoomJoin.getInstance();
         } else if (msgCode == MsgCode.ROOM_EXIT.getCode()) {
             return RoomExit.getInstance();
+        } else if (msgCode == MsgCode.ROOM_INFO.getCode()) {
+            return RoomInfo.getInstance();
         } else if (msgCode == MsgCode.GAME_START.getCode()) {
             return GameStart.getInstance();
         }
