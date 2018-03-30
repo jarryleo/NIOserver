@@ -40,8 +40,14 @@ public class ServiceManager implements ServiceListener {
     public void onDataArrived(SelectionKey key, byte[] data) {
         String msg = null;
         try {
-            msg = new String(data, "utf-8");
-            MsgManager.processMsg(key, msg);
+            if (data.length == 0) return;
+            String s = new String(data, 0, 1, "utf-8");
+            if ("P".equals(s)) {
+                MsgManager.processPaint(key, data);
+            } else {
+                msg = new String(data, "utf-8");
+                MsgManager.processMsg(key, msg);
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -42,7 +42,7 @@ public class GameControl extends Thread {
      * 检测房间流程
      */
     private void checkRooms() {
-        List<RoomBean> rooms = RoomManager.getmRooms();
+        List<RoomBean> rooms = RoomManager.getRooms();
         if (rooms.size() > 0) {
             //遍历所有房间
             for (RoomBean room : rooms) {

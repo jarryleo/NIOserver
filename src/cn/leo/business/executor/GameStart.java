@@ -30,7 +30,7 @@ public class GameStart implements MsgExecutor {
         //开始游戏
         UserBean user = UserManager.getUser(key);
         RoomBean room = user.getRoom();
-        if (room.getRoomOwner() == user) {
+        if (room.getRoomOwner() == user || room.getRoomState() > 0) {
             //房主才能开始游戏
             startSuccess(room);
         } else {

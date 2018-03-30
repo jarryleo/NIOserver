@@ -33,7 +33,7 @@ public class GameChat implements MsgExecutor {
         String word = room.getWord();
         //判断是否答对
         if (user != room.getRoomPainter()) {
-            if (msg == word) {
+            if (msg.equals(word)) {
                 //答对加分
                 int i = user.getScore() + 1;
                 user.setScore(i);

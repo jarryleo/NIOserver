@@ -99,6 +99,23 @@ public class MsgManager {
         MsgExecutorFactory.executeMsg(key, msgBean);
     }
 
+    /**
+     * 转发画画数据
+     *
+     * @param key
+     * @param paint
+     */
+    public static void processPaint(SelectionKey key, byte[] paint) {
+        UserBean user = UserManager.getUser(key);
+        RoomBean room = user.getRoom();
+        for (UserBean u : room.getUsers()) {
+            if (u != user) {
+                ServiceCore.sendMsg(u.getSelectionKey(), paint);
+            }
+        }
+    }
+
+
     public static void checkHeart() {
         Set<SelectionKey> users = UserManager.getUsers();
         Iterator<SelectionKey> iterator = users.iterator();
@@ -122,9 +139,10 @@ public class MsgManager {
     public static void InterceptConnection(SelectionKey selectionKey, String errorMsg) {
         try {
             Logger.i("断开链接[" + SocketUtil.getSelectionKeyIp(selectionKey) + "] - " + errorMsg);
+            UserManager.removeUser(selectionKey);
+            Logger.d("clientCount:" + UserManager.getUsers().size());
             selectionKey.cancel();
             selectionKey.channel().close();
-            UserManager.removeUser(selectionKey);
         } catch (IOException e) {
             //不处理
         }

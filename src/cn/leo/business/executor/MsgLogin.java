@@ -37,6 +37,7 @@ public class MsgLogin implements MsgExecutor {
             //登录成功
             //UserManager.addUser(key, login);
             UserBean user = UserManager.getUser(key);
+            user.setUserId(login.getUserId());
             user.setUserName(login.getUserName());
             user.setIcon(login.getIcon());
             user.setIp(login.getIp());

@@ -9,7 +9,7 @@ public class JsonUtil {
             //Logger.d("from:" + json);
             return JSON.parseObject(json, classOfT);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }

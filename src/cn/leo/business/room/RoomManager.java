@@ -30,7 +30,7 @@ public class RoomManager {
         //标记房主
         room.setRoomOwner(user);
         //当前画画的人
-        room.setRoomPainter(user);
+        //room.setRoomPainter(user);
         //房间加入列表
         mRooms.add(room);
         return room;
@@ -64,7 +64,7 @@ public class RoomManager {
         return JsonUtil.toJson(mRooms);
     }
 
-    public static List<RoomBean> getmRooms() {
+    public static List<RoomBean> getRooms() {
         return mRooms;
     }
 }

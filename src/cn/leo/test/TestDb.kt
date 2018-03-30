@@ -2,13 +2,18 @@ package cn.leo.test
 
 import cn.leo.kotlin.db.MysqlHelper
 import cn.leo.kotlin.utils.DbUtil
+import java.nio.charset.Charset
 
 fun main(args: Array<String>) {
+    var paint:String = "我是Paint"
+    val bytes = paint.toByteArray(Charset.forName("utf-8"))
+    val s1 = String(bytes, 0, 3, Charset.forName("utf-8"))
+    println(s1)
 //    testInsert()
 //    testDelete()
 //    testUpdate()
 //    testQuery()
-    MysqlHelper().Update("person").set("name = ?", "李四").where("age = ?", 24).execute()
+    //MysqlHelper().Update("person").set("name = ?", "李四").where("age = ?", 24).execute()
 }
 
 fun testInsert() {
