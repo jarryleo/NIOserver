@@ -50,11 +50,11 @@ public class GameChat implements MsgExecutor {
                     msgBean.setId(200);
                 }
                 //发送房间信息
-                MsgBean msg2 = new MsgBean();
+                /*MsgBean msg2 = new MsgBean();
                 msg2.setType(MsgType.GAME.getType());
                 msg2.setCode(MsgCode.ROOM_INFO.getCode());
                 msg2.setMsg(room.toString());
-                MsgManager.sendMsg(key, msg2);
+                MsgManager.sendMsg(key, msg2);*/
 
 
             }
