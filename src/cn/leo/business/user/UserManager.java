@@ -1,6 +1,8 @@
 package cn.leo.business.user;
 
+import cn.leo.business.bean.RoomBean;
 import cn.leo.business.bean.UserBean;
+import cn.leo.business.executor.RoomExit;
 
 import java.nio.channels.SelectionKey;
 import java.util.Set;
@@ -26,6 +28,8 @@ public class UserManager {
      */
     public static void removeUser(SelectionKey key) {
         mUsers.remove(key);
+        //从房间移除
+        RoomExit.getInstance().executeMsg(key, null);
     }
 
     /**

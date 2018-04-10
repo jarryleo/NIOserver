@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ServiceCore extends Thread {
-    private static final int BUFFER_CACHE = 1024;// 缓冲区大小
+    private static final int BUFFER_CACHE = 1024 * 64;// 缓冲区大小
     private static final int TIMEOUT = 3000; // 超时时间3秒
     private static ServiceListener mListener; // 服务器监听器
     private static int mPort;
