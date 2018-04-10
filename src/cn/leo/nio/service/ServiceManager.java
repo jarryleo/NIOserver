@@ -62,6 +62,5 @@ public class ServiceManager implements ServiceListener {
         UserManager.removeUser(key);
         int size = UserManager.getUsers().size();
         Logger.d("clientCount:" + size);
-
     }
 }

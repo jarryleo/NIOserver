@@ -27,9 +27,9 @@ public class UserManager {
      * @param key
      */
     public static void removeUser(SelectionKey key) {
-        mUsers.remove(key);
         //从房间移除
         RoomExit.getInstance().executeMsg(key, null);
+        mUsers.remove(key);
     }
 
     /**
